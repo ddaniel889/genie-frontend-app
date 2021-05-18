@@ -1,0 +1,21 @@
+<div class="container-fluid">  
+    <div style="width: 100%; height: 30px;  text-align: left" class="title">
+     <mat-icon aria-hidden="false" aria-label="add" class="add" >add</mat-icon> <h3 class="title2"> Alta nueva Tarifa</h3>
+      </div>
+      <br />
+      <mat-dialog-content [formGroup]="form">       
+        <!--mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field-->
+        
+    </mat-dialog-content>
+    <mat-dialog-actions class="buttons">
+        <button type="button" class="btn btn-light" (click)="close()" class="btn btn-dark btn">Cancelar</button>
+        <button [mat-dialog-close]="Insert"  type="button" class="btn btn-success save" (click)="save()">Guardar</button>    
+    </mat-dialog-actions>
+    </div>

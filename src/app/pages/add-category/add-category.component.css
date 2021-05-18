@@ -1,0 +1,44 @@
+.add {
+    color:#EEE338;
+    float: left;
+
+}
+
+.title {
+    background-color:#EEE338;
+
+}
+
+.title2 {
+    color: black;
+
+}
+.btn {
+    border-radius: 15px;
+}
+mat-label{
+    color: gray !important;
+}
+input{
+    border-bottom: gray !important;
+    width: 200px !important;
+}
+
+mat-form-field{
+    width: 600px !important;
+} 
+.buttons{
+    margin-top: 30px;
+}
+.save {
+    border-radius: 15px;
+    float: right !important;
+    background-color:#18D2CD;
+    border-color:#18D2CD;
+    margin-left: 69%;
+}
+mat-form-field{
+    margin-top: 10px !important;
+    margin-left: 50px;
+    width: 80% !important;
+}
