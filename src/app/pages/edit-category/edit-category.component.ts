@@ -1,6 +1,6 @@
 import { Component, OnInit,Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators,FormBuilder } from '@angular/forms';
+import { FormGroup,FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-category',

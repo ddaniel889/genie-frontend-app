@@ -11,16 +11,9 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  public getData(url:string):Observable<any>{
-    return this.http.get<any[]>(url).pipe(
-      map( (resp: any) => {
-      return resp;
-      } )
-    );
-   }
+  
 
-
-   postAuthentication(url:string, data:any):Observable<any>{
+  public postAuthentication(url:string, data:any):Observable<any>{
     console.log(data);
     let headers = new HttpHeaders();
     headers.append('Content-Type','application/json');

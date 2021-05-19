@@ -1,6 +1,7 @@
 import { Component, OnInit,Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators,FormBuilder } from '@angular/forms';
+import { FormGroup,FormBuilder } from '@angular/forms';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-add-category',
@@ -16,7 +17,7 @@ export class AddCategoryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddCategoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) data
 
   ) {
     this.name = data.name;
@@ -24,6 +25,7 @@ export class AddCategoryComponent implements OnInit {
    }
 
   ngOnInit() {
+    
     this.form = this.fb.group({
       name: [''],
       description: [''],

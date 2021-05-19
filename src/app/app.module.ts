@@ -12,11 +12,12 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatSidenavModule} from '@angular/material';
 import {MatListModule} from '@angular/material/list'
 import {MatToolbarModule} from '@angular/material'
+import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material';
 import {MatDividerModule} from '@angular/material';
+import { MatTableModule } from '@angular/material/table'; 
 import { MatPaginatorModule} from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import {MatDialogModule}   from '@angular/material';
+import {MatDialogModule}   from '@angular/material/dialog';
 import { AddCategoryComponent } from './pages/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 
@@ -28,6 +29,7 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
     AddCategoryComponent,
     EditCategoryComponent
   ],
+  entryComponents: [ AddCategoryComponent, EditCategoryComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -44,6 +46,7 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
     MatTableModule,
     FormsModule,
     ReactiveFormsModule,
+    MatCheckboxModule,MatInputModule
   ],
   providers: [ HttpClient,CategoryService, AuthenticationService],
   bootstrap: [AppComponent]

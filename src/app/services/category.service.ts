@@ -11,19 +11,12 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getData(url:string):Observable<any>{
-    return this.http.get<any[]>(url).pipe(
-      map( (resp: any) => {
-      return resp;
-      } )
-    );
-   }
+ 
 
-
-   public post(url:string, data:any):Observable<any>{
+   public post(url:string, data:any,token :string):Observable<any>{
     console.log(data);
     let headers = new HttpHeaders();
-    headers.append('Content-Type','application/json');
+    headers = headers.set('Authorization', token);
     return this.http.post<any[]>(URL.BASE+url,data, {headers: headers}).pipe(
         map(
           resp => {
@@ -45,23 +38,30 @@ export class CategoryService {
 
 public get(url: string, webToken:string): Observable<any> {
   let headers = new HttpHeaders();
-  headers.append('Authorization',webToken);
- 
+  headers = headers.set('Authorization', webToken);
   return this.http.get( URL.BASE + url , {
       headers: headers,
   }).pipe(
-      map(this.parseResponse),
+      map(
+        (resp: any) => {
+          return resp;
+          } 
+        ),
       catchError(this.handleError<any>())
   );
 }
 
-public delete(url: string, id: string,webToken:string): Observable<any>  {
+public delete(url: string, webToken:string): Observable<any>  {
   let headers = new HttpHeaders();
-  headers.append('Authorization',webToken);
-  return this.http.delete(URL.BASE + url + id, {
+  headers = headers.set('Authorization', webToken);
+  return this.http.delete(URL.BASE + url , {
       headers: headers,
   }).pipe(
-      map(this.parseResponse),
+      map(
+        resp => {
+          return resp;
+         }
+      ),
       catchError(this.handleError<any>())
       );
   }
@@ -73,7 +73,6 @@ public delete(url: string, id: string,webToken:string): Observable<any>  {
     }
     return r.data;
 }  
-
 
 
 }

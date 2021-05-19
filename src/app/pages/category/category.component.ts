@@ -17,43 +17,33 @@ import { EditCategoryComponent } from '../edit-category/edit-category.component'
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit, AfterViewInit {
-  //public categoryI: any = [];
+  public checked = false;
+  public box = false;
   public displayedColumns = ['ID','Name', 'Description','id'];
   public jwToken : string;
   dataSource: MatTableDataSource<any>  = new MatTableDataSource();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-
-  public categoryI = [
-    {token: 1, name: 'Tecnología', description: ''},
-    {token: 2, name: 'Coméstica', description: 'Cuidado personal'},
-    {token: 3, name: 'Tienda Digital', description: 'E commerce'}
-  ];
+  public categoryI = [];
+  
 
   constructor(private category:CategoryService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.displayedColumns = ['token','Name', 'Description','id'];
+    this.displayedColumns = ['check','token','Name', 'Description','id'];
     this.getToken();
-    let tt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJPYmplY3RpZnlQYXlsb2FkIjpmYWxzZSwiaXNzIjoiZjI4NzJlY2MtZTU1Yy00ZTRjLTgxMTktYTQ1Y2FiODA5MGJkIiwiUGF5bG9hZCI6IjgwZGMyNThmYTNmNzI3ODU4MzUyNGRjYWY4ZTVjZDU3OTRmMjQ2MjM2MGZlNThmZTE0ZDBmZTdmZmM0NjQxODg1NDhiODkzMjBjOWU3ZmJkYjA1YTdmNWJiM2M1ZDA0NmQ2YTU0ZjhiNzI3ZjRlYTI5YmNhZDlmMDU5NDk2MTIxZjNmNWFlMmIxZWRjOGZkOGUwNTdmNjU2N2U4NmNhYmVhOWNmNzJlOThmYmFhZGJiNGExMjlkZmJkYzE4NGM3OGNkYmM0NjI0NWZjM2U3ODkxODVkN2I1YzU2NWEyZWVmYjM5YjcyZmFkMTJlYWViMjdmOTBiNmFiMTdlOWU5NmUiLCJleHAiOjE2MjEyMjI2OTMsImlhdCI6MTYyMTIyMjI3MywianRpIjoiZjUxNTI0ZjAtMDkxNS00NDY4LTlmMGYtMzA0OWE5NGRlNjA1In0.Gcu1gdTt4HhO3_XoOaGsX8DCqWDJD8QA-SMwr6n5gkM'
-   // this.loadCategories('/backend/v1/categories/',tt);
-    //this.dataSource.data = this.categoryI;
-    this.dataSource.data = this.categoryI;
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-   getToken() {
+  public getToken() : void {
     const object : any = {
       app: APP.DATA,
       token: TOKEN.DATA,
     }; 
     this.authentication.postAuthentication('/backend/v1/authentication/login',object).subscribe( data => {
       console.log(data);
-      /*this.policies = policy;
-      let reserve = this.policies.reserve
-      this.reserveId = reserve.new_id;*/
       this.jwToken = data.jwt;
       console.log(this.jwToken);
       this.loadCategories('/backend/v1/categories/',this.jwToken);
@@ -63,34 +53,44 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
 
- private loadCategories(url:string, token:string) {
+  
+
+ private loadCategories(url:string, token: string) : void{
   setTimeout(() => {
     this.category.get(url,token)
     .subscribe( data => {
       console.log(data);
-      this.dataSource.data = data;
       this.categoryI = data;
-     //console.log(this.tarifa);
+      this.dataSource.data = data;
 
     }
     );
   },4000);
 }
 
-  public openDialog() {
-    const dialogConfig = new MatDialogConfig();
-  dialogConfig.disableClose = true;
-  dialogConfig.autoFocus = true; 
-  dialogConfig.width = "600px"; 
-  dialogConfig.height = "460px"; 
+public onChange(e) {
+  console.log(e.checked);
+}
 
-  dialogConfig.data = {
-    id: 1,
-    title: 'Category'
-  };
-    const dialogRef = this.dialog.open(AddCategoryComponent,dialogConfig );
-    dialogRef.afterClosed().subscribe(result => {
+  public openDialog() : void {
+ 
+   const dialogRef = this.dialog.open( AddCategoryComponent, {
+    height: '320px',
+    width: '500px',
+    disableClose : true,
+    autoFocus : true,
+    data: { name: '',description:'' },
+
+  });
+   dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
       console.log(JSON.stringify(result));
+      this.ngOnInit();
+    });
+ 
+   
+   // dialogRef.afterClosed().subscribe(result => {
+      //console.log(JSON.stringify(result));
      /* this.client.post('tarifa', result).subscribe((data)=> {
         console.log(data);
         this.ngOnInit();
@@ -100,38 +100,52 @@ export class CategoryComponent implements OnInit, AfterViewInit {
             console.log(error);
           }
      );*/
-    });
+    //});
   }
 
-  editCategory(a) {
-    let id = a.id;
-    const dialogConfig = new MatDialogConfig();
-  dialogConfig.disableClose = true;
-  dialogConfig.autoFocus = true; 
-  dialogConfig.width = "600px"; 
-  dialogConfig.height = "460px"; 
-
-  dialogConfig.data = {
-    id: 1,
-    title: 'Edit Category',
-    data: id
-  };
-    const dialogRef = this.dialog.open(EditCategoryComponent,dialogConfig );
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(JSON.stringify(result));
-      this.ngOnInit();
+  public editCategory(a) : void{
+    let token = a;
+    console.log(token);
+    const dialogRef = this.dialog.open( EditCategoryComponent, {
+      height: '320px',
+      width: '500px',
+      disableClose : true,
+      autoFocus : true,
+      data: { name: '',description:'' },
+  
     });
+     dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+        console.log(JSON.stringify(result));
+        this.ngOnInit();
+      });
+   
+     
+     // dialogRef.afterClosed().subscribe(result => {
+        //console.log(JSON.stringify(result));
+       /* this.client.post('tarifa', result).subscribe((data)=> {
+          console.log(data);
+          this.ngOnInit();
+          this.router.navigateByUrl('/tiendas/tarifas');
+            },
+            error => {
+              console.log(error);
+            }
+       );*/
+      //});
   }
 
-  applyFilterapplyFilter(filterValue: string) {
+  public applyFilterapplyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  delete() {
-   /* this.client.delete('tarifa/',id).subscribe(data => {
+  public delete(token:string) : void {
+    console.log(token);
+   this.category.delete(`/backend/v1/categories/${token}/delete`,this.jwToken).subscribe(data => {
+     console.log(data);
      this.ngOnInit();
   
       },
@@ -139,10 +153,8 @@ export class CategoryComponent implements OnInit, AfterViewInit {
         console.log(error);
      
       }
-  );*/
-  console.log('delete');
+  );
+  
     }
   
-
-
 }

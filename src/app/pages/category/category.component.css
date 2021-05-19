@@ -84,3 +84,11 @@ mat-toolbar {
   margin-top: 25px;
   background-color:#084eab !important;
 }
+
+th.actions{
+  padding-left: 15px !important;
+
+}
+
+
+
