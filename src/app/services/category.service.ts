@@ -13,7 +13,7 @@ export class CategoryService {
 
  
 
-   public post(url:string, data:any,token :string):Observable<any>{
+   public post(url:string, data:any,token :any):Observable<any>{
     console.log(data);
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', token);

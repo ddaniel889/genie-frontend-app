@@ -29,10 +29,10 @@ export class EditCategoryComponent implements OnInit {
   });
   }
 
-  close() {
+  close() : void  {
     this.dialogRef.close();
   }
-  save() {
+  save() : void  {
     this.dialogRef.close(this.form.value);
     console.log(this.form.value);
 }

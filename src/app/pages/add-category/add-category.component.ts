@@ -25,7 +25,7 @@ export class AddCategoryComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+    console.log(uuidv4());
     this.form = this.fb.group({
       name: [''],
       description: [''],
@@ -34,12 +34,20 @@ export class AddCategoryComponent implements OnInit {
 
 
 
-  close() {
+  close() : void  {
     this.dialogRef.close();
   }
-  save() {
-    this.dialogRef.close(this.form.value);
+  save () : void  {
     console.log(this.form.value);
+    const object: any = {
+      name : this.form.value.name,
+      description : this.form.value.description,
+      token: uuidv4()
+     
+    }
+    this.dialogRef.close(object);
+    console.log('Valor de form en category');
+  
 }
 
 

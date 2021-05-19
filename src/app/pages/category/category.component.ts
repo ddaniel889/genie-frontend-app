@@ -83,24 +83,20 @@ public onChange(e) {
 
   });
    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      console.log(JSON.stringify(result));
+    console.log(JSON.stringify(result));
+    this.category.post('/backend/v1/categories/save', result,this.jwToken).subscribe((data)=> {
+      console.log(data);
       this.ngOnInit();
+        },
+        error => {
+          console.log(error);
+        }
+   );
+      
     });
  
    
-   // dialogRef.afterClosed().subscribe(result => {
-      //console.log(JSON.stringify(result));
-     /* this.client.post('tarifa', result).subscribe((data)=> {
-        console.log(data);
-        this.ngOnInit();
-        this.router.navigateByUrl('/tiendas/tarifas');
-          },
-          error => {
-            console.log(error);
-          }
-     );*/
-    //});
+   
   }
 
   public editCategory(a) : void{
@@ -119,20 +115,7 @@ public onChange(e) {
         console.log(JSON.stringify(result));
         this.ngOnInit();
       });
-   
-     
-     // dialogRef.afterClosed().subscribe(result => {
-        //console.log(JSON.stringify(result));
-       /* this.client.post('tarifa', result).subscribe((data)=> {
-          console.log(data);
-          this.ngOnInit();
-          this.router.navigateByUrl('/tiendas/tarifas');
-            },
-            error => {
-              console.log(error);
-            }
-       );*/
-      //});
+  
   }
 
   public applyFilterapplyFilter(filterValue: string): void {
