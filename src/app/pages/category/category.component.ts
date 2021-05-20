@@ -86,7 +86,7 @@ public onChange(e) {
     console.log(JSON.stringify(result));
     this.category.post('/backend/v1/categories/save', result,this.jwToken).subscribe((data)=> {
       console.log(data);
-      this.ngOnInit();
+      location.reload();
         },
         error => {
           console.log(error);
