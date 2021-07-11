@@ -6,6 +6,8 @@
 
 .title {
   color:#084eab;
+  margin-right: 15px;
+  font-size: 23px !important;
 }
 .title-label {
   color:#BABABA !important;
@@ -30,10 +32,28 @@ mat-toolbar{
  }
 
 mat-form-field{
-  width: 432px !important;
+  width: 370px !important;
 }
 .cancelTitle{
   color: #084eab;
+}
+
+.select-status{
+  width: 240px !important;
+  margin-left: 25px !important;
+}
+.select-company{
+  width: 350px !important;
+}
+.status-title{
+  font-size: 17px !important;
+  margin-left: 25px !important;
+  font-weight:lighter !important;
+ 
+}
+
+h6{
+  color:#A3A2A2 !important;
 }
 
 button.cancel{
@@ -43,4 +63,14 @@ button.cancel{
 
 .example-spacer {
   flex: 1 1 auto;
+}
+
+.address{
+  padding-top:6px !important;
+  padding-bottom: 5px !important;
+}
+
+agm-map {
+  height: 200px;
+  width: 370px;
 }

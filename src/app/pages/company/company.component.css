@@ -15,28 +15,6 @@
   .delete{
     color: #ed5c5c;
   }
-
-  .searchbox{
-    margin-left: 10px !important;
-  }
-
-  input.form-control.buscar{
-    height: 32px !important;
-    width:  280px !important;
-    border-radius: 5px !important;
-    border: 0.5px solid green;
-    
-  }
-
-  ::placeholder { 
-    margin-left: 15px !important;
-    color:black !important;
-  }
-
-  .image-class{
-    width:110px !important;
-    height: 80px !important;
-  }
   .edit{
     color: #084eab;
   }
@@ -121,10 +99,26 @@ mat-toolbar {
   background-color:#084eab !important;
 }
 
+.searchbox{
+  margin-left: 10px !important;
+}
+
+input.form-control.buscar{
+  height: 32px !important;
+  width:  280px !important;
+  border-radius: 5px !important;
+  border: 0.5px solid green;
+  
+}
+
+::placeholder { 
+  margin-left: 15px !important;
+  color:black !important;
+}
+
 th.actions{
   padding-left: 15px !important;
 
 }
-
 
 

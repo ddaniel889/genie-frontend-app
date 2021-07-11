@@ -5,55 +5,54 @@ import * as _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.css']
+  selector: 'app-add-company',
+  templateUrl: './add-company.component.html',
+  styleUrls: ['./add-company.component.css']
 })
-export class AddCategoryComponent implements OnInit {
+export class AddCompanyComponent implements OnInit {
   Insert: any;
   public name: string;
+  public photo: string;
   public description: string;
   public image2: any;
-  public error:boolean;
   public mime:string;
   public size:string;
+  public error:boolean;
   public cardImageBase64: string;
-  public photo: string;
+  public form: FormGroup;
   public files:string  []  =  [];
-  form: FormGroup;
   public imageError:string;
   public isImageSaved:boolean;
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddCategoryComponent>,
+    private dialogRef: MatDialogRef<AddCompanyComponent>,
     @Inject(MAT_DIALOG_DATA) data
-
-  ) {
+  ) { 
     this.name = data.name;
     this.photo = data.photo;
     this.description = data.description;
-   }
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
       name: [''],
       photo: [''],
-      description: [''],
-
+      country: [''],
+      code: [''],
+      currency: ['']
   });
   }
 
-  public close() : void  {
+  
+  close() : void  {
     this.dialogRef.close();
   }
 
-  public fileChangeEvent(event) :any {
-    
-    for  (var i =  0; i < event.target.files.length; i++)  {  
+  public fileChangeEvent(event) {
+    for  (var i =  0; i < event.target.files.length; i++)  { 
+      this.name = '' 
       this.files.push(event.target.files[i]);
-      this.name = ''
-     
     }
     const max_size = 200000;
     const allowed_types = ['image/png', 'image/jpeg','image/jpg'];
@@ -72,14 +71,13 @@ export class AddCategoryComponent implements OnInit {
 
   if (!_.includes(allowed_types, this.image2.type)) {
       this.error = true;
-      this.imageError = 'FORMAT.PNG,JPG OR JPEG ARE ALLOWED';
-      
+      this.imageError =  'FORMAT.PNG,JPG OR JPEG ARE ALLOWED';
       return false;
   }
+
     const reader = new FileReader();
     this.mime = this.image2.type;
     this.size = this.image2.size;
-    console.log(event);
     reader.onload = (e: any) => {
       const image = new Image();
       image.src = e.target.result;
@@ -105,23 +103,29 @@ export class AddCategoryComponent implements OnInit {
 
   reader.readAsDataURL(event.target.files[0]);
 }
-
-  public save () : void  {
+  save () : void  {
     let id = uuidv4()
+    console.log(id)
     const objectImage : any = {
-        data: this.cardImageBase64,
-        mime: this.mime,
-        name: this.name,
-        size: this.size
-    }
-    console.log(objectImage);
+    
+      data: this.cardImageBase64,
+      mime: this.mime,
+      name: this.name,
+      size: this.size
+ 
+  }
+  console.log(objectImage);
     const object: any = {
+      country: {
+        code: this.form.value.code,
+        currency: this.form.value.currency,
+        name: this.form.value.country
+      },
+
       name : this.form.value.name,
-      description : this.form.value.description,
       image: objectImage,
       token: id
     }
-
     this.dialogRef.close(object);
 }
 

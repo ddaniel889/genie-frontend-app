@@ -14,12 +14,21 @@ import {MatListModule} from '@angular/material/list'
 import {MatToolbarModule} from '@angular/material'
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material';
 import {MatDividerModule} from '@angular/material';
 import { MatTableModule } from '@angular/material/table'; 
 import { MatPaginatorModule} from '@angular/material/paginator';
+import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule}   from '@angular/material/dialog';
 import { AddCategoryComponent } from './pages/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
+import { CompanyComponent } from './pages/company/company.component';
+import { AddCompanyComponent } from './pages/add-company/add-company.component';
+import { EditCompanyComponent } from './pages/edit-company/edit-company.component';
+import { StoreComponent } from './pages/store/store.component';
+import { AddStoreComponent } from './pages/add-store/add-store.component';
+import { EditStoreComponent } from './pages/edit-store/edit-store.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -27,22 +36,33 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
     AppComponent,
     CategoryComponent,
     AddCategoryComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    CompanyComponent,
+    AddCompanyComponent,
+    EditCompanyComponent,
+    StoreComponent,
+    AddStoreComponent,
+    EditStoreComponent
   ],
-  entryComponents: [ AddCategoryComponent, EditCategoryComponent],
+  entryComponents: [ AddCategoryComponent, EditCategoryComponent,AddCompanyComponent,EditCompanyComponent, AddStoreComponent,  EditStoreComponent],
   imports: [
     BrowserModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCJX1NLWfDuPaQIi90-215TKfgpIYKAHDY'
+    }),
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule, MatCheckboxModule,
     MatSidenavModule,
     MatListModule,
+    MatMenuModule,
     MatToolbarModule,
     MatIconModule,
     MatDividerModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatSelectModule,
     MatTableModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,39 +1,38 @@
 import { AfterViewInit,Component, OnInit,ViewChild } from '@angular/core';
-import {  CategoryService } from './../../services/category.service';
+import {  CompanyService } from './../../services/company.service';
 import {  AuthenticationService } from './../../services/authentication.service';
-import { Category } from './../../models/category';
+import { Company } from './../../models/company';
 import { APP,TOKEN } from './../../services/constants';
 import { Router } from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
-import { AddCategoryComponent } from '../add-category/add-category.component';
-import { EditCategoryComponent } from '../edit-category/edit-category.component';
-
+import { AddCompanyComponent } from '../add-company/add-company.component';
+import { EditCompanyComponent } from '../edit-company/edit-company.component';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  selector: 'app-company',
+  templateUrl: './company.component.html',
+  styleUrls: ['./company.component.css']
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
+export class CompanyComponent implements OnInit,AfterViewInit {
   public checked = false;
   public box = false;
-  public displayedColumns = ['ID','Name', 'Description','id'];
+  public displayedColumns = [];
   public jwToken : string;
   dataSource: MatTableDataSource<any>  = new MatTableDataSource();
   public data:string;
   public mime:string;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  public categoryI = [];
-  
+  public companyI = [];
 
-  constructor(private category:CategoryService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
+  constructor(private company:CompanyService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.displayedColumns = ['check','token','photo','Name', 'Description','id'];
+    this.displayedColumns = ['check','token','photo','Name', 'Code','Country','Currency','id'];
     this.getToken();
   }
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -47,30 +46,31 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.authentication.postAuthentication('/backend/v1/authentication/login',object).subscribe( data => {
       console.log(data);
       this.jwToken = data.jwt;
-      this.loadCategories('/backend/v1/categories/',this.jwToken);
+      this.loadCompany('/backend/v1/companies/',this.jwToken);
      
      }
    );
   }
 
-
- private loadCategories(url:string, token: string) : void{
+ 
+ private loadCompany(url:string, token: string) : void{
   const timeout = setTimeout(() => {
     clearTimeout(timeout) 
-    this.category.get(url,token)
+    this.company.get(url,token)
     .subscribe( data => {
       console.log(data);
-      //this.categoryI = data;
+      this.companyI = data;
       this.dataSource.data = data;
       console.log('token image');
-      let tokenImage = data[7].token;
+      let tokenImage = data[4].token;
       console.log(tokenImage);
-      this.category.get(`/backend/v1/categories/${tokenImage}/image`,this.jwToken)
+      this.company.get(`/backend/v1/companies/${tokenImage}/image`,this.jwToken)
       .subscribe( data => {
         console.log(data);
+        console.log('datos de la imagen para posicion 4');
         this.data = data.data;
         this.mime = data.mime;
-          
+      
       }
       );
     }
@@ -84,50 +84,57 @@ public onChange(e) {
 
   public openDialog() : void {
  
-   const dialogRef = this.dialog.open( AddCategoryComponent, {
-    height: '370px',
-    width: '500px',
+   const dialogRef = this.dialog.open( AddCompanyComponent, {
+    height: '500px',
+    width: '550px',
     disableClose : true,
     autoFocus : true,
-    data: { name: '',photo: '',description:'' },
+    data: { 
+    name: '',
+    photo: '',
+    country:''
+    },
 
   });
    dialogRef.afterClosed().subscribe(result => {
-    console.log(result)
-    let imageObject = result.image
     console.log(JSON.stringify(result));
+    console.log(result.image)
+    let imageObject = result.image
+    console.log('valor de token categoria');
+    console.log(result.token);
     delete result.image
-    this.category.post('/backend/v1/categories/save', result,this.jwToken).subscribe((data)=> {
-      console.log('objeto devuelto en insert category')
+    this.company.post('/backend/v1/companies/save', result,this.jwToken).subscribe((data)=> {
       console.log(data);
-      let tokenCategory = data.token;
-      console.log('token obtenido')
-      this.category.post(`/backend/v1/categories/image/${tokenCategory}/save`, imageObject,this.jwToken).subscribe((data)=> {
-        console.log(data);
+      console.log('valor de token company obtenido');
+      let tokenCompany = data.token
+      console.log(tokenCompany)
+      this.company.post(`/backend/v1/companies/image/${tokenCompany}/save`, imageObject,this.jwToken).subscribe((data)=> {
+        console.log('imagen insertada')
+        console.log(data);      
         location.reload();
           },
           error => {
-        console.log(error);
-        }
+            console.log(error);
+          }
      );
-      },
+        },
         error => {
           console.log(error);
-        }
-   );
-    });
+      }
+   ); 
+  });
  
   }
 
   public editCategory(a) : void{
     let token = a;
     console.log(token);
-    const dialogRef = this.dialog.open( EditCategoryComponent, {
-      height: '320px',
-      width: '500px',
+    const dialogRef = this.dialog.open( EditCompanyComponent, {
+      height: '450px',
+      width: '550px',
       disableClose : true,
       autoFocus : true,
-      data: { name: '', photo: '',description:'' },
+      data: { name: '',description:'' },
   
     });
      dialogRef.afterClosed().subscribe(result => {
@@ -138,6 +145,7 @@ public onChange(e) {
   
   }
 
+
   public applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -146,7 +154,7 @@ public onChange(e) {
   }
 
   public delete(token:string) : void {
-   this.category.delete(`/backend/v1/categories/${token}/delete`,this.jwToken).subscribe(data => {
+   this.company.delete(`/backend/v1/companies/${token}/delete`,this.jwToken).subscribe(data => {
      console.log(data);
      this.ngOnInit();
   
@@ -156,5 +164,7 @@ public onChange(e) {
      
       }
   );
-    }  
+  }
+
+
 }

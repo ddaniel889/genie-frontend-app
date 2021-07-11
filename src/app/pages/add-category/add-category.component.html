@@ -7,14 +7,18 @@
            <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
          </mat-toolbar>
     </div>
-
-      <br />
       <mat-dialog-content [formGroup]="form">       
         <mat-form-field>
             <mat-label>Name</mat-label>
             <input matInput formControlName="name">
         </mat-form-field>
         <br />
+        
+          <mat-label><span class="title-label">Photo</span></mat-label>
+          <span class="name">{{name}} </span>
+          <input #inputFoto hidden="true"  formControlName="photo" type="file" onclick="this.value=null" (change)="fileChangeEvent($event)" />
+          <button mat-flat-button  type="button" (click)="inputFoto.click()" class="btnFile"><span class="btn">UPLOAD </span></button> <br />
+           <span class="error" *ngIf="true">{{imageError}} </span>
         <mat-form-field>
             <mat-label>Description</mat-label>
             <input matInput formControlName="description">

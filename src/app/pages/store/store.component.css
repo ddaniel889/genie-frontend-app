@@ -12,26 +12,54 @@
     background-color: #084eab;
   }
 
-  .delete{
-    color: #ed5c5c;
-  }
-
   .searchbox{
     margin-left: 10px !important;
   }
-
+  
   input.form-control.buscar{
-    height: 32px !important;
+    height: 34px !important;
     width:  280px !important;
     border-radius: 5px !important;
     border: 0.5px solid green;
     
   }
-
+  
   ::placeholder { 
     margin-left: 15px !important;
     color:black !important;
   }
+
+  .delete{
+    color: #ed5c5c;
+  }
+
+  
+  .option{
+    margin-left:30px !important;
+  }
+
+  .cancelTitle{
+    color: #ed5c5c;
+    font-size: 12px;
+  }
+
+  button:hover{
+    color: black;
+    font-weight:500;
+  }
+
+  .cancelTitleLast{
+    color: #ed5c5c;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 50px !important;
+  }
+  
+  button.cancel{
+    border: 1px solid #ed5c5c;
+    margin-right: 10px;
+    margin-left: 20px !important;
+   }
 
   .image-class{
     width:110px !important;
@@ -64,6 +92,14 @@
 .ico{
   color:#e76f58;
   padding-left: 20px;
+}
+
+.icoFilter{
+  color:#e76f58;
+}
+
+div.mat-menu-panel{
+  width: 350px !important;
 }
 
 
@@ -116,6 +152,16 @@ table {
   margin-left: 10px !important;
 }
 
+.store {
+  color:#084eab;
+  text-decoration: underline;
+  font-weight: bold !important;
+}
+
+.status {
+  color:#084eab;
+}
+
 mat-toolbar {
   margin-top: 25px;
   background-color:#084eab !important;
@@ -125,6 +171,4 @@ th.actions{
   padding-left: 15px !important;
 
 }
-
-
 

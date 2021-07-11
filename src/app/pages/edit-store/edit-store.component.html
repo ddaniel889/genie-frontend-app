@@ -1,0 +1,110 @@
+
+
+    <div style="width: 100%;">
+      <mat-toolbar class="conten">
+            <span mat-dialog-title class="title">Edit store  </span> 
+          
+            <span>
+            <h6 class="status-title">Status</h6> 
+            <select  class="select-status"  name="status" placeholder="select" (change)="onOptionsSelected($event)">
+              <option *ngFor="let sta of status" [ngValue]="sta.value">{{sta.value}}</option>
+          </select>
+        </span>
+           <span class="example-spacer"></span>
+           <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
+         </mat-toolbar>
+    </div>
+      <mat-dialog-content [formGroup]="form">  
+        <table>
+
+         <tr>
+           <td>
+
+            <mat-form-field>
+              <mat-label>Store name</mat-label>
+              <input matInput formControlName="store">
+          </mat-form-field>
+
+
+           </td>
+
+           <td>
+            <mat-form-field>
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+          </mat-form-field>
+
+
+          </td>
+
+
+         </tr>
+
+         <tr>
+
+          <td>
+
+            <mat-label><span class="title-label">Photo</span></mat-label>
+            <span class="name">{{name}} </span>
+            <input #inputFoto hidden="true"  formControlName="photo" type="file" onclick="this.value=null" (change)="fileChangeEvent($event)" />
+            <button mat-flat-button  type="button" (click)="inputFoto.click()" class="btnFile"><span class="btn">UPLOAD </span></button> <br />
+             <span class="error" *ngIf="true">{{imageError}} </span>
+
+          </td>
+
+          <td>
+            <mat-form-field>
+              <mat-label>Currency</mat-label>
+              <input matInput formControlName="currency">
+          </mat-form-field>
+
+          </td>
+          
+        </tr>
+        <tr>
+
+          <td>
+            <mat-form-field>
+              <mat-label>Select company</mat-label>
+              <mat-select  class="select-company" formControlName="company" name="company" placeholder="select" >
+                <mat-option *ngFor="let sta of companyI" [value]="sta.name">{{sta.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="address">
+              <mat-label>Address(Street/Number/Floor)</mat-label>
+              <input matInput formControlName="address">
+          </mat-form-field>
+
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+
+          </td>
+
+          <td>
+            <agm-map [latitude]="lat" [longitude]="lng">
+              <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map>
+          </td>
+        </tr>
+
+        </table>     
+     
+        <br />
+     
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+
+        <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">Cancel</span></button> 
+        <button mat-raised-button
+        matTooltip="Info about the action" color="primary"
+
+        aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">
+        Save
+       </button>   
+    </mat-dialog-actions>

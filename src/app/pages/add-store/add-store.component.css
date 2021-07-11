@@ -1,0 +1,84 @@
+
+
+.add{
+    display: flex;
+  }
+  
+  .title {
+    color:#084eab;
+    margin-right: 15px;
+    font-size: 23px !important;
+  }
+  .title-label {
+    color:#BABABA !important;
+  }
+  .btn{
+    color:#084eab !important;
+    /*margin-left: 310px !important;*/
+  }
+  .error{
+    color:#E8446C !important;
+  }
+  .name{
+    margin-left: 15px !important;
+  }
+  mat-icon.add{
+    margin-bottom: 15px !important;
+  
+  }
+  mat-toolbar{
+    background-color: #fff;
+    padding-left: 0;
+   }
+  
+  mat-form-field{
+    width: 370px !important;
+  }
+  .cancelTitle{
+    color: #084eab;
+  }
+
+  .select-status{
+    width: 240px !important;
+    margin-left: 25px !important;
+  }
+  .select-company{
+    width: 350px !important;
+  }
+  .status-title{
+    font-size: 17px !important;
+    margin-left: 25px !important;
+    font-weight:lighter !important;
+   
+  }
+
+  h6{
+    color:#A3A2A2 !important;
+  }
+
+  .address{
+    padding-top:6px !important;
+    padding-bottom: 5px !important;
+  }
+  .select{
+    width: 200px !important;
+    margin-left: 25px !important;
+  }
+
+  div.mat-select-value{
+    width: 200px !important;
+  }
+  
+  button.cancel{
+    border: 1px solid #084eab;
+    margin-right: 10px;
+   }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  agm-map {
+    height: 200px !important;
+    width: 370px !important;
+  }

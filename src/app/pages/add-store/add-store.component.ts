@@ -3,13 +3,19 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { FormGroup,FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import {  StoreService } from './../../services/store.service';
+import {  AuthenticationService } from './../../services/authentication.service';
+import { APP,TOKEN } from './../../services/constants';
 
 @Component({
-  selector: 'app-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.css']
+  selector: 'app-add-store',
+  templateUrl: './add-store.component.html',
+  styleUrls: ['./add-store.component.css']
 })
-export class AddCategoryComponent implements OnInit {
+export class AddStoreComponent implements OnInit {
+  public lat = 19.290950;
+  public lng = -99.653015;
+  public zoom = 9;
   Insert: any;
   public name: string;
   public description: string;
@@ -20,15 +26,34 @@ export class AddCategoryComponent implements OnInit {
   public cardImageBase64: string;
   public photo: string;
   public files:string  []  =  [];
+  public companyI:string  []  =  [];
   form: FormGroup;
   public imageError:string;
   public isImageSaved:boolean;
+  public jwToken:string;
+
+
+
+/* select 2    */
+
+selected:any;
+filtered :any;
+    stat = [
+        { value: true }, //active
+        { value: false }   //pause
+        ];
+
+ status = [ { value: 'Active' }, 
+    { value: 'Paused'}, { value: 'Draft'}
+  
+  ];
+
+/*   */
 
   constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddCategoryComponent>,
+    private fb: FormBuilder,private store:StoreService,private authentication:  AuthenticationService,
+    private dialogRef: MatDialogRef<AddStoreComponent>,
     @Inject(MAT_DIALOG_DATA) data
-
   ) {
     this.name = data.name;
     this.photo = data.photo;
@@ -37,11 +62,38 @@ export class AddCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: [''],
+      store: [''],
+      country: [''],
       photo: [''],
-      description: [''],
-
+      currency: [''],
+      company: [''],
+      address: ['']
   });
+   this.getToken();
+  }
+
+  public getToken() : void {
+    const object : any = {
+      app: APP.DATA,
+      token: TOKEN.DATA,
+    }; 
+    this.authentication.postAuthentication('/backend/v1/authentication/login',object).subscribe( data => {
+      console.log(data);
+      this.jwToken = data.jwt;
+      this.loadCompany('/backend/v1/companies/',this.jwToken);
+     }
+   );
+  }
+
+  private loadCompany(url:string, token: string) : void{
+    const timeout = setTimeout(() => {
+      clearTimeout(timeout) 
+      this.store.get(url,token)
+      .subscribe( data => {
+        console.log(data);
+        this.companyI = data;
+      });
+    },4000);
   }
 
   public close() : void  {
@@ -115,14 +167,33 @@ export class AddCategoryComponent implements OnInit {
         size: this.size
     }
     console.log(objectImage);
-    const object: any = {
-      name : this.form.value.name,
-      description : this.form.value.description,
+    const objectStore: any = {
+      active: true,
+      address: this.form.value.address,
       image: objectImage,
+      company: {
+        country: {
+          code: "CL",
+          currency: this.form.value.currency,
+          name: this.form.value.country
+        },
+        name: this.form.value.company,
+        token: id
+      },
+      latitude: -40.4513,
+      longitude: -71.6653,
+      name: this.form.value.store,
       token: id
     }
+    this.dialogRef.close(objectStore);
+}
 
-    this.dialogRef.close(object);
+public onOptionsSelected(event): void {
+  this.selected = event.target.value
+  console.log(this.selected); 
+  this.filtered = this.stat.filter(t=>t.value ==this.selected);
+  console.log(this.filtered);
+
 }
 
 }
