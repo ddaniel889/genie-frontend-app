@@ -1,0 +1,55 @@
+
+
+    <div style="width: 100%;">
+        <mat-toolbar class="conten">
+             <span class="example-spacer"></span>
+             <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
+           </mat-toolbar>
+      </div>
+        <mat-dialog-content [formGroup]="form">  
+          <table>
+          <tr>
+            <td> 
+                <img class="image-class" src="data:{{mime}};base64,{{data}}" alt=""> 
+            </td>
+            <td>
+           
+            <h4 class="companyName">{{this.companyName}}   <button *ngIf="dataStore ==true" class="edit" mat-button mat-dialog-close><mat-icon class="print">create</mat-icon><span class="cancelTitle">Edit</span></button> </h4>
+            <h2 class="storeName">{{this.storeName}}</h2>
+            </td>
+          </tr>
+          <tr>
+              <td></td>
+              <td></td>
+          </tr>
+          <tr>
+            <td>
+              <agm-map [latitude]="lat" [longitude]="lng">
+               <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+              </agm-map>  
+           
+            </td>
+            <td>
+                <ul class="list" *ngIf="dataStore ==true">
+                    <li><strong>Status</strong>  </li> 
+                    <li class="blue"> {{this.status}} </li>
+                    <li><strong class="address"> Address</strong> </li> 
+                    <li class="addressData"> {{this.address}} </li>
+                    <li class="red"> SEE IN MAP </li>
+                </ul>
+            
+            </td>
+          </tr>
+          </table>     
+          <br />
+      </mat-dialog-content>
+      <mat-dialog-actions>
+          <button class="cancel" mat-button mat-dialog-close><mat-icon class="print">print</mat-icon><span class="cancelTitle">PRINT</span></button> 
+          <button mat-raised-button
+          matTooltip="Info about the action" color="primary" class="close"
+  
+          aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">
+          CLOSE
+         </button>   
+      </mat-dialog-actions>
+

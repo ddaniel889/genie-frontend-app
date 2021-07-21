@@ -6,6 +6,7 @@ import {  AuthenticationService } from './../../services/authentication.service'
 import { APP,TOKEN } from './../../services/constants';
 import * as _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import { Store } from 'src/app/models/store';
 
 @Component({
   selector: 'app-edit-store',
@@ -13,8 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./edit-store.component.css']
 })
 export class EditStoreComponent implements OnInit {
-  public lat = 19.290950;
-  public lng = -99.653015;
+  public lat =  -35.675147;
+  public lng = -71.542969;
   public zoom = 9;
   Insert: any;
   public name: string;
@@ -26,6 +27,7 @@ export class EditStoreComponent implements OnInit {
   public address: string;
   public jwToken:string;
   public tokenStore:string;
+  public storToken:string;
   public image2: any;
   public error:boolean;
   public mime:string;
@@ -42,12 +44,13 @@ selected:any;
 filtered :any;
     stat = [
         { value: true }, //active
-        { value: false }   //pause
+        { value: false },  //pause
+      
         ];
 
  status = [ { value: 'Active' }, 
-    { value: 'Paused'}
-  
+    { value: 'Paused'},
+    { value: 'Draft'}
   ];
 
 /*   */
@@ -70,12 +73,18 @@ filtered :any;
       store: [''],
       country: [''],
       photo: [''],
+      latitude: [''],
+      longitude: [''],
       currency: [''],
       company: [''],
       address: ['']
   });
     console.log('id de store recibido')
     this.tokenStore = this.data.token;
+    this.storToken = this.data.storToken;
+    console.log('token especifico de tienda');
+    console.log(this.storToken);
+    console.log('token de compañia');
     console.log(this.tokenStore)
     this.getToken();
   }
@@ -94,25 +103,35 @@ filtered :any;
   }
 
   private editStore(token: string, jwToken:string) : void{
-   /* const timeout = setTimeout(() => {
-      clearTimeout(timeout) */
-        let tokenImage = token;
-        console.log(tokenImage);
-        this.storeService.get(`/backend/v1/stores/${tokenImage}`,jwToken)
+    //const timeout = setTimeout(() => {
+      //clearTimeout(timeout) 
+        let tokenStore = token;
+        console.log(tokenStore);
+        this.storeService.get(`/backend/v1/stores/${tokenStore}`,jwToken)
         .subscribe( data => {
+          console.log('tiendas devueltas asociadas a compañías');
           console.log(data);
+          let Stores:any = data;
+          let storeSelected = this.storToken;
+          let results =  Stores.filter(function (index:any) { return index.token == storeSelected; });
+          let firstObj:any = (results.length > 0) ? results[0] : null;
+          let storeToken = firstObj.token; 
+          let status = firstObj.active;
+          let statusStore = (status == true) ? 'Active' : 'Paused';
           this.data = data.data;
           this.form.setValue({
-            store: data.store,
-            country: data.country,
-            photo: data.photo,
-            currency: data.currency,
-            company: data.company,
-            address: data.address,
+            store: firstObj.name,
+            country: firstObj.company.country.name,
+            photo: '',
+            currency: firstObj.company.country.currency,
+            latitude: firstObj.latitude,
+            longitude: firstObj.longitude,
+            company: firstObj.company.name,
+            address: firstObj.address
           });
         });
    
-   // },4000);
+    //},4000);
     }
     
   
@@ -170,6 +189,8 @@ filtered :any;
           } else {
               const imgBase64Path = e.target.result;
               this.cardImageBase64 = imgBase64Path;
+              console.log('STRING DE BASE 64');
+              console.log(this.cardImageBase64);
               this.isImageSaved = true;
           }
       };
@@ -178,7 +199,7 @@ filtered :any;
   reader.readAsDataURL(event.target.files[0]);
 }
   save() : void  {
-    let id = uuidv4()
+    let statusSelected:boolean = (this.selected == 'Active') ? true : false;
     const objectImage : any = {
         data: this.cardImageBase64,
         mime: this.mime,
@@ -187,7 +208,7 @@ filtered :any;
     }
     console.log(objectImage);
     const objectStore: any = {
-      active: true,
+      active: statusSelected,
       address: this.form.value.address,
       image: objectImage,
       company: {
@@ -197,13 +218,15 @@ filtered :any;
           name: this.form.value.country
         },
         name: this.form.value.company,
-        token: id
+        token: this.tokenStore
       },
       latitude: -40.4513,
       longitude: -71.6653,
       name: this.form.value.store,
-      token: id
+      token: this.storToken
     }
+    console.log('OBJETO EN EDIT');
+    console.log(objectStore);
     this.dialogRef.close(objectStore);
   }
 

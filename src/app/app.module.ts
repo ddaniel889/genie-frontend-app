@@ -29,6 +29,8 @@ import { StoreComponent } from './pages/store/store.component';
 import { AddStoreComponent } from './pages/add-store/add-store.component';
 import { EditStoreComponent } from './pages/edit-store/edit-store.component';
 import { AgmCoreModule } from '@agm/core';
+import { AddChangesComponent } from './pages/add-changes/add-changes.component';
+import { StoreDetailComponent } from './pages/store-detail/store-detail.component';
 
 
 @NgModule({
@@ -42,9 +44,12 @@ import { AgmCoreModule } from '@agm/core';
     EditCompanyComponent,
     StoreComponent,
     AddStoreComponent,
-    EditStoreComponent
+    EditStoreComponent,
+    AddChangesComponent,
+    StoreDetailComponent
   ],
-  entryComponents: [ AddCategoryComponent, EditCategoryComponent,AddCompanyComponent,EditCompanyComponent, AddStoreComponent,  EditStoreComponent],
+  entryComponents: [ AddCategoryComponent, EditCategoryComponent,AddCompanyComponent,EditCompanyComponent, AddStoreComponent, 
+     EditStoreComponent,AddChangesComponent,StoreDetailComponent],
   imports: [
     BrowserModule,
     AgmCoreModule.forRoot({

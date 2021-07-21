@@ -98,6 +98,8 @@ export class AddCategoryComponent implements OnInit {
           } else {
               const imgBase64Path = e.target.result;
               this.cardImageBase64 = imgBase64Path;
+              console.log('STRING DE BASE 64');
+              console.log(this.cardImageBase64);
               this.isImageSaved = true;
           }
       };

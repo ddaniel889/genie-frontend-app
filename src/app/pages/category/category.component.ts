@@ -9,6 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { EditCategoryComponent } from '../edit-category/edit-category.component';
+import {SelectionModel} from '@angular/cdk/collections';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   public mime:string;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public categoryI = [];
+  public tokenCategory = [];
+  public imageRetrieve = [];
+  public selection = new SelectionModel<any>(true, []);
   
 
   constructor(private category:CategoryService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
@@ -38,6 +42,29 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+ 
+  public isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    console.log('seleccionados');
+    console.log(numSelected);
+    const elementSelected = this.selection.selected;
+    console.log('elemento seleccionado');
+    console.log(elementSelected);
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+   public  masterToggle() {
+      this.isAllSelected() ?
+          this.selection.clear() :
+          this.dataSource.data.forEach(row => {
+          this.selection.select(row)
+          console.log('elemento seleccionado');
+          console.log(row);
+        }
+      );
+    }
 
   public getToken() : void {
     const object : any = {
@@ -60,26 +87,52 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.category.get(url,token)
     .subscribe( data => {
       console.log(data);
-      //this.categoryI = data;
+      this.categoryI = data;
       this.dataSource.data = data;
+      for(let item in this.categoryI){ 
+        console.log(this.categoryI[item].token);
+        this.tokenCategory.push(this.categoryI[item].token);
+       }
       console.log('token image');
       let tokenImage = data[7].token;
       console.log(tokenImage);
-      this.category.get(`/backend/v1/categories/${tokenImage}/image`,this.jwToken)
-      .subscribe( data => {
-        console.log(data);
-        this.data = data.data;
-        this.mime = data.mime;
-          
+      for (let i = 0; i <  this.tokenCategory.length; i++){
+        console.log('categoria individual');
+        console.log(this.tokenCategory[i]);
+        this.category.get(`/backend/v1/categories/${this.tokenCategory[i]}/image`,this.jwToken)
+        .subscribe( data => {
+          console.log(data);
+          this.imageRetrieve.push(data);
+          console.log('imagenes devueltas');
+          console.log(this.imageRetrieve);
+          for(let item in this.imageRetrieve){ 
+            console.log('posicion');
+            console.log(this.imageRetrieve[item]);
+            console.log(this.imageRetrieve[item].data);
+            console.log(this.imageRetrieve[item].mime);
+           // this.tokenCategory.push(this.categoryI[item].token);
+            /*console.log('valor de data por posicion');
+            this.data =  this.imageRetrieve[item].data;
+            console.log('valor de mime por posicion');
+            this.mime =  this.imageRetrieve[item].mime;*/
+           }
+            
+        }
+        ); 
+
       }
-      );
+      console.log('imagenes totales');
+      console.log(this.imageRetrieve);
     }
+    
     );
   },4000);
 }
 
-public onChange(e) {
+public onChange(e,index) {
   console.log(e.checked);
+  console.log(e);
+  console.log(this.categoryI[index]);
 }
 
   public openDialog() : void {
@@ -104,7 +157,7 @@ public onChange(e) {
       console.log('token obtenido')
       this.category.post(`/backend/v1/categories/image/${tokenCategory}/save`, imageObject,this.jwToken).subscribe((data)=> {
         console.log(data);
-        location.reload();
+        //location.reload();
           },
           error => {
         console.log(error);

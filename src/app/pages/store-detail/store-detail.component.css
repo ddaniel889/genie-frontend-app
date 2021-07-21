@@ -1,0 +1,143 @@
+
+
+.add{
+    display: flex;
+  }
+  
+  .title {
+    color:#084eab;
+    margin-right: 15px;
+    font-size: 23px !important;
+  }
+  .title-label {
+    color:#BABABA !important;
+  }
+  .btn{
+    color:#084eab !important;
+    /*margin-left: 310px !important;*/
+  }
+  .error{
+    color:#E8446C !important;
+  }
+  .name{
+    margin-left: 15px !important;
+  }
+  mat-icon.add{
+    margin-bottom: 15px !important;
+  
+  }
+  mat-toolbar{
+    background-color: #fff;
+    padding-left: 0;
+    height: 40px !important;
+   }
+  
+  mat-form-field{
+    width: 370px !important;
+  }
+  .cancelTitle{
+    color: #084eab;
+  }
+
+  .select-status{
+    width: 240px !important;
+    margin-left: 25px !important;
+  }
+  .select-company{
+    width: 350px !important;
+  }
+  .status-title{
+    font-size: 17px !important;
+    margin-left: 25px !important;
+    font-weight:lighter !important;
+   
+  }
+
+  h6{
+    color:#A3A2A2 !important;
+  }
+
+  .address{
+    padding-top:6px !important;
+    padding-bottom: 5px !important;
+  }
+  .select{
+    width: 200px !important;
+    margin-left: 25px !important;
+  }
+  .print{
+    margin-top: 7px !important;  
+    margin-right: 10px !important;
+    color: #084eab !important;
+    margin-bottom: 10px !important;
+  }
+  mat-icon.print{
+    height: 20px !important;
+  }
+
+  div.mat-select-value{
+    width: 200px !important;
+  }
+  .address{
+    margin-top: 20px !important;
+  }
+  
+  button.cancel{
+    border: 2px solid #084eab;
+    margin-right: 350px !important;
+    height: 39px !important;
+    width: 100px !important;
+   }
+
+   button.edit{
+     border: 2px solid #084eab;
+     margin-left: 180px !important;
+     height: 39px !important;
+    }
+
+   button.close{
+     float: right !important;  
+     margin-left: 200px !important;
+    }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  agm-map {
+    height: 200px !important;
+    width: 370px !important;
+  }
+
+  .image-class{
+    width:370px !important;
+    height: 180px !important;
+  }
+
+  .list{
+    list-style: none !important;
+  }
+  .addressData{
+    margin-bottom: 20px !important;
+  }
+
+  li.blue{
+    margin-bottom: 20px !important;
+  }
+  .companyName{
+    color: #B8B3B3 !important;
+  }
+
+  .red{
+    color: #E8446C !important;
+  }
+  .storeName,.blue{
+    color: #084eab !important;
+  }
+  .storeName{
+   padding-bottom: 50px !important;
+  }
+  h4,h2{
+    margin-left: 30px !important;
+    margin-bottom: 30px !important;
+  }

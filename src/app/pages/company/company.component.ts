@@ -9,6 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import { AddCompanyComponent } from '../add-company/add-company.component';
 import { EditCompanyComponent } from '../edit-company/edit-company.component';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-company',
@@ -25,6 +26,7 @@ export class CompanyComponent implements OnInit,AfterViewInit {
   public mime:string;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public companyI = [];
+  public selection = new SelectionModel<any>(true, []);
 
   constructor(private company:CompanyService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
 
@@ -37,6 +39,30 @@ export class CompanyComponent implements OnInit,AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+ 
+  public isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    console.log('seleccionados');
+    console.log(numSelected);
+    const elementSelected = this.selection.selected;
+    console.log('elemento seleccionado');
+    console.log(elementSelected);
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  
+   public  masterToggle() {
+      this.isAllSelected() ?
+          this.selection.clear() :
+          this.dataSource.data.forEach(row => {
+          this.selection.select(row)
+          console.log('elemento seleccionado');
+          console.log(row);
+        }
+      );
+    }
 
   public getToken() : void {
     const object : any = {

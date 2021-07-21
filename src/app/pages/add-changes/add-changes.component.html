@@ -1,0 +1,64 @@
+
+
+    <div style="width: 100%;">
+        <mat-toolbar class="conten">
+              <span mat-dialog-title class="title"> Changes status  </span> 
+             <span class="example-spacer"></span>
+             <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
+           </mat-toolbar>
+      </div>
+        <mat-dialog-content [formGroup]="form">  
+          <table>
+           <tr>
+             <td>
+            <p>This changes affects the following selection:</p>
+             </td>
+             <td>
+            </td>
+           </tr>
+           <tr>
+            <td>
+                <ul class="list">
+                    <li> Centro 4 </li>
+                    <li> Las Condes Shooping </li>
+                    <li> Av San Martin 3121 </li>
+                </ul>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <mat-label>Select status</mat-label>
+                <mat-select  class="select-company" formControlName="status" name="status" placeholder="select" >
+                    <!--option *ngFor="let sta of status" [ngValue]="sta.value">{{sta.value}}</option-->
+                     <option value="active">Active</option>
+                     <option value="paused">Paused</option>
+                     <option value="draft">Draft</option>
+              </mat-select>
+            </mat-form-field>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <agm-map [latitude]="lat" [longitude]="lng">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+              </agm-map>
+            </td>
+          </tr>
+          </table>     
+          <br />
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">  
+          <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">Cancel</span></button> 
+          <button mat-raised-button
+          matTooltip="Info about the action" color="primary"
+          aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">
+          Save
+         </button>   
+      </mat-dialog-actions>

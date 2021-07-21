@@ -13,8 +13,8 @@ import { APP,TOKEN } from './../../services/constants';
   styleUrls: ['./add-store.component.css']
 })
 export class AddStoreComponent implements OnInit {
-  public lat = 19.290950;
-  public lng = -99.653015;
+  public lat =  -35.675147;
+  public lng = -71.542969;
   public zoom = 9;
   Insert: any;
   public name: string;
@@ -67,9 +67,13 @@ filtered :any;
       photo: [''],
       currency: [''],
       company: [''],
+      latitude: [''],
+      longitude: [''],
       address: ['']
   });
    this.getToken();
+   this.setForm();
+
   }
 
   public getToken() : void {
@@ -85,6 +89,19 @@ filtered :any;
    );
   }
 
+  private setForm() : void {
+    this.form.setValue({
+      store: '',
+      country: '',
+      photo: '',
+      currency: '',
+      company: '',
+      latitude: this.lat,
+      longitude: this.lng,
+      address: ''
+    });
+  }
+
   private loadCompany(url:string, token: string) : void{
     const timeout = setTimeout(() => {
       clearTimeout(timeout) 
@@ -92,6 +109,8 @@ filtered :any;
       .subscribe( data => {
         console.log(data);
         this.companyI = data;
+        console.log('datos de compañias')
+        console.log(this.companyI);
       });
     },4000);
   }
@@ -160,6 +179,11 @@ filtered :any;
 
   public save () : void  {
     let id = uuidv4()
+    let companySelected = this.form.value.company;
+    let results =  this.companyI.filter(function (nickname:any) { return nickname.name == companySelected; });
+    let firstObj:any = (results.length > 0) ? results[0] : null;
+    let storeToken = firstObj.token; 
+    console.log(firstObj);
     const objectImage : any = {
         data: this.cardImageBase64,
         mime: this.mime,
@@ -167,6 +191,7 @@ filtered :any;
         size: this.size
     }
     console.log(objectImage);
+   
     const objectStore: any = {
       active: true,
       address: this.form.value.address,
@@ -177,10 +202,10 @@ filtered :any;
           currency: this.form.value.currency,
           name: this.form.value.country
         },
-        name: this.form.value.company,
-        token: id
+        name: this.form.value.company, 
+        token: storeToken //token de compania elegida
       },
-      latitude: -40.4513,
+      latitude: -35.675147,
       longitude: -71.6653,
       name: this.form.value.store,
       token: id

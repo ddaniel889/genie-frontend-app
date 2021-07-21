@@ -9,6 +9,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import { AddStoreComponent } from '../add-store/add-store.component';
 import { EditStoreComponent } from '../edit-store/edit-store.component';
+import { AddChangesComponent } from '../add-changes/add-changes.component';
+import { StoreDetailComponent } from '../store-detail/store-detail.component';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-store',
@@ -25,8 +28,10 @@ export class StoreComponent implements  OnInit, AfterViewInit {
   public data:string;
   public mime:string;
   public storeI =  [];
+  public numStore : number;
   public tokenCategory:string;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  public selection = new SelectionModel<any>(true, []);
 
 
   constructor(private store:StoreService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
@@ -52,11 +57,37 @@ export class StoreComponent implements  OnInit, AfterViewInit {
       //this.loadStores('/backend​/v1​/stores​/',this.jwToken); 
         /*this.categoryI = data;
       this.dataSource.data = data;*/
-      this.loadStores('/backend/v1/stores/',this.jwToken);
+      let storeToken = 'e66d7d52f79b4563abc7789d5b039249';  
+      this.loadStores(`/backend/v1/stores/?storeToken=${storeToken}`,this.jwToken);
     
      }
    );
   }
+
+  public isAllSelected() : boolean {
+    this.options = true;
+    const numSelected = this.selection.selected.length;
+    this.numStore = numSelected;
+    console.log('seleccionados');
+    console.log(numSelected);
+    const elementSelected = this.selection.selected;
+    console.log('elemento seleccionado');
+    console.log(elementSelected);
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  
+   public  masterToggle() : void {
+      this.isAllSelected() ?
+          this.selection.clear() :
+          this.dataSource.data.forEach(row => {
+          this.selection.select(row)
+          console.log('elemento seleccionado');
+          console.log(row);
+        }
+      );
+    }
 
   
  private loadImageCategories(url:string,jwToken:string) : void{
@@ -85,7 +116,7 @@ const timeout = setTimeout(() => {
     this.storeI = data;
     this.dataSource.data = data;
     console.log('token image');
-    let tokenImage = data[0].token;
+    let tokenImage = data[2].token;
     console.log(tokenImage);
     this.store.get(`/backend/v1/stores/${tokenImage}/image`,this.jwToken)
     .subscribe( data => {
@@ -105,6 +136,44 @@ public onChange(e) {
 }
 
 
+public storeDetail(a:string,b:string) : void {
+  let token = a;
+  let storToken = b;
+  const dialogRef = this.dialog.open( StoreDetailComponent, {
+   height: '600px',
+   width: '800px',
+   disableClose : true,
+   autoFocus : true,
+   data: { name: '',photo: '',description:'',token: token,storToken: storToken },
+
+ });
+  dialogRef.afterClosed().subscribe(result => {
+   console.log(result)
+   let imageObject = result.image
+   this.tokenCategory = result.token;
+   console.log(JSON.stringify(result));
+   delete result.image
+   this.store.post('/backend/v1/stores/save', result,this.jwToken).subscribe((data)=> {
+     console.log('objeto devuelto en insert stores')
+     console.log(data);
+     let tokenRetrieve = data.token;
+     this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
+       console.log(data);
+       location.reload();
+         },
+         error => {
+       console.log(error);
+       }
+    );
+     },
+       error => {
+         console.log(error);
+       }
+  );
+   });
+
+ }
+
 public openDialog() : void {
   const dialogRef = this.dialog.open( AddStoreComponent, {
    height: '600px',
@@ -123,8 +192,8 @@ public openDialog() : void {
    this.store.post('/backend/v1/stores/save', result,this.jwToken).subscribe((data)=> {
      console.log('objeto devuelto en insert stores')
      console.log(data);
-     console.log('token obtenido')
-     this.store.post(`/backend/v1/stores/image/${this.tokenCategory}/save`, imageObject,this.jwToken).subscribe((data)=> {
+     let tokenRetrieve = data.token;
+     this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
        console.log(data);
        location.reload();
          },
@@ -141,8 +210,45 @@ public openDialog() : void {
 
  }
 
- public editStore(a) : void{
+ public openChanges() : void {
+  const dialogRef = this.dialog.open( AddChangesComponent, {
+   height: '450px',
+   width: '600px',
+   disableClose : true,
+   autoFocus : true,
+   data: { name: '',photo: '',description:'' },
+
+ });
+  dialogRef.afterClosed().subscribe(result => {
+   console.log(result)
+   let imageObject = result.image
+   this.tokenCategory = result.token;
+   console.log(JSON.stringify(result));
+   delete result.image
+   this.store.post('/backend/v1/stores/save', result,this.jwToken).subscribe((data)=> {
+     console.log('objeto devuelto en insert stores')
+     console.log(data);
+     let tokenRetrieve = data.token;
+     this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
+       console.log(data);
+       location.reload();
+         },
+         error => {
+       console.log(error);
+       }
+    );
+     },
+       error => {
+         console.log(error);
+       }
+  );
+   });
+
+ }
+
+ public editStore(a,b) : void{
   let token = a;
+  let storToken = b;
   console.log('token recibido para editar')
   console.log(token);
   const dialogRef = this.dialog.open( EditStoreComponent, {
@@ -150,15 +256,27 @@ public openDialog() : void {
     width: '800px',
     disableClose : true,
     autoFocus : true,
-    data: { store: '', country: '',photo:'', currency:'', company:'', address:'',token: token },
-
+    data: { store: '', country: '',photo:'', currency:'', company:'', address:'',token: token,storToken: storToken},
   });
    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       console.log(JSON.stringify(result));
+      let imageObject = result.image
+      this.tokenCategory = result.token;
+      console.log(JSON.stringify(result));
+      delete result.image
       this.store.post('/backend/v1/stores/save', result,this.jwToken).subscribe((data)=> {
         console.log('objeto devuelto en update stores')
         console.log(data);
+        let tokenRetrieve = data.token;
+        this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
+          console.log(data);
+          location.reload();
+            },
+            error => {
+          console.log(error);
+          }
+       );
         },
           error => {
             console.log(error);

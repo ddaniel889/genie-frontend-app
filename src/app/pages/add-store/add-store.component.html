@@ -3,9 +3,7 @@
     <div style="width: 100%;">
         <mat-toolbar class="conten">
               <span mat-dialog-title class="title"> New store  </span> 
-            
-            
-              <h6 class="status-title">Status</h6> 
+              <h6 class="status-title">Status</h6> <br />
               <select  class="select-status"  name="status" placeholder="select" (change)="onOptionsSelected($event)">
                 <option *ngFor="let sta of status" [ngValue]="sta.value">{{sta.value}}</option>
             </select>
@@ -88,6 +86,14 @@
           </tr>
           <tr>
             <td>
+              <mat-form-field>
+                <mat-label>Latitude</mat-label>
+                <input matInput formControlName="latitude">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Longitude</mat-label>
+              <input matInput formControlName="longitude">
+          </mat-form-field>
 
             </td>
 
@@ -106,11 +112,11 @@
 
       <mat-dialog-actions align="end">
   
-          <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">Cancel</span></button> 
+          <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">CANCEL</span></button> 
           <button mat-raised-button
           matTooltip="Info about the action" color="primary"
   
           aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">
-          Save
+          SAVE
          </button>   
       </mat-dialog-actions>
