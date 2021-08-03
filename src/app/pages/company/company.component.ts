@@ -88,7 +88,7 @@ export class CompanyComponent implements OnInit,AfterViewInit {
       this.companyI = data;
       this.dataSource.data = data;
       console.log('token image');
-      let tokenImage = data[4].token;
+      let tokenImage = data[3].token;
       console.log(tokenImage);
       this.company.get(`/backend/v1/companies/${tokenImage}/image`,this.jwToken)
       .subscribe( data => {
@@ -160,7 +160,7 @@ public onChange(e) {
       width: '550px',
       disableClose : true,
       autoFocus : true,
-      data: { name: '',description:'' },
+      data: { name: '',country:'',code:'',currency:'',tokenCompany: token}
   
     });
      dialogRef.afterClosed().subscribe(result => {

@@ -31,6 +31,7 @@ import { EditStoreComponent } from './pages/edit-store/edit-store.component';
 import { AgmCoreModule } from '@agm/core';
 import { AddChangesComponent } from './pages/add-changes/add-changes.component';
 import { StoreDetailComponent } from './pages/store-detail/store-detail.component';
+import { DelegateComponent } from './pages/delegate/delegate.component';
 
 
 @NgModule({
@@ -46,10 +47,11 @@ import { StoreDetailComponent } from './pages/store-detail/store-detail.componen
     AddStoreComponent,
     EditStoreComponent,
     AddChangesComponent,
-    StoreDetailComponent
+    StoreDetailComponent,
+    DelegateComponent
   ],
   entryComponents: [ AddCategoryComponent, EditCategoryComponent,AddCompanyComponent,EditCompanyComponent, AddStoreComponent, 
-     EditStoreComponent,AddChangesComponent,StoreDetailComponent],
+     EditStoreComponent,AddChangesComponent,StoreDetailComponent, DelegateComponent],
   imports: [
     BrowserModule,
     AgmCoreModule.forRoot({

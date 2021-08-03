@@ -96,7 +96,16 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       console.log('token image');
       let tokenImage = data[7].token;
       console.log(tokenImage);
-      for (let i = 0; i <  this.tokenCategory.length; i++){
+      this.category.get(`/backend/v1/categories/${tokenImage}/image`,this.jwToken)
+      .subscribe( data => {
+        console.log(data);
+        console.log('datos de la imagen para posicion 4');
+        this.data = data.data;
+        this.mime = data.mime;
+      
+      }
+      );
+     /* for (let i = 0; i <  this.tokenCategory.length; i++){
         console.log('categoria individual');
         console.log(this.tokenCategory[i]);
         this.category.get(`/backend/v1/categories/${this.tokenCategory[i]}/image`,this.jwToken)
@@ -110,19 +119,14 @@ export class CategoryComponent implements OnInit, AfterViewInit {
             console.log(this.imageRetrieve[item]);
             console.log(this.imageRetrieve[item].data);
             console.log(this.imageRetrieve[item].mime);
-           // this.tokenCategory.push(this.categoryI[item].token);
-            /*console.log('valor de data por posicion');
-            this.data =  this.imageRetrieve[item].data;
-            console.log('valor de mime por posicion');
-            this.mime =  this.imageRetrieve[item].mime;*/
            }
             
         }
         ); 
 
-      }
-      console.log('imagenes totales');
-      console.log(this.imageRetrieve);
+      }*/
+      //console.log('imagenes totales');
+      //console.log(this.imageRetrieve);
     }
     
     );
@@ -157,7 +161,7 @@ public onChange(e,index) {
       console.log('token obtenido')
       this.category.post(`/backend/v1/categories/image/${tokenCategory}/save`, imageObject,this.jwToken).subscribe((data)=> {
         console.log(data);
-        //location.reload();
+        location.reload();
           },
           error => {
         console.log(error);
@@ -180,13 +184,30 @@ public onChange(e,index) {
       width: '500px',
       disableClose : true,
       autoFocus : true,
-      data: { name: '', photo: '',description:'' },
+      data: { name: '', photo: '',description:'',tokenCategory: token },
   
     });
      dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
         console.log(JSON.stringify(result));
         this.ngOnInit();
+        this.category.post('/backend/v1/categories/save', result,this.jwToken).subscribe((data)=> {
+          console.log('objeto devuelto en update category')
+          console.log(data);
+          let tokenRetrieve = data.token;
+         /* this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
+            console.log(data);
+            location.reload();
+              },
+              error => {
+            console.log(error);
+            }
+         );*/
+          },
+            error => {
+              console.log(error);
+            }
+       );
       });
   
   }

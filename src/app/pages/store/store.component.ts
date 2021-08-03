@@ -11,6 +11,7 @@ import { AddStoreComponent } from '../add-store/add-store.component';
 import { EditStoreComponent } from '../edit-store/edit-store.component';
 import { AddChangesComponent } from '../add-changes/add-changes.component';
 import { StoreDetailComponent } from '../store-detail/store-detail.component';
+import { DelegateComponent } from '../delegate/delegate.component';
 import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
@@ -77,7 +78,11 @@ export class StoreComponent implements  OnInit, AfterViewInit {
     return numSelected === numRows;
   }
 
-  
+  public deleteCheck() : void {
+    this.options = false;
+    this.selection.clear();
+  }
+
    public  masterToggle() : void {
       this.isAllSelected() ?
           this.selection.clear() :
@@ -116,7 +121,7 @@ const timeout = setTimeout(() => {
     this.storeI = data;
     this.dataSource.data = data;
     console.log('token image');
-    let tokenImage = data[2].token;
+    let tokenImage = data[3].token;
     console.log(tokenImage);
     this.store.get(`/backend/v1/stores/${tokenImage}/image`,this.jwToken)
     .subscribe( data => {
@@ -212,6 +217,42 @@ public openDialog() : void {
 
  public openChanges() : void {
   const dialogRef = this.dialog.open( AddChangesComponent, {
+   height: '450px',
+   width: '600px',
+   disableClose : true,
+   autoFocus : true,
+   data: { name: '',photo: '',description:'' },
+
+ });
+  dialogRef.afterClosed().subscribe(result => {
+   console.log(result)
+   let imageObject = result.image
+   this.tokenCategory = result.token;
+   console.log(JSON.stringify(result));
+   delete result.image
+   this.store.post('/backend/v1/stores/save', result,this.jwToken).subscribe((data)=> {
+     console.log('objeto devuelto en insert stores')
+     console.log(data);
+     let tokenRetrieve = data.token;
+     this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
+       console.log(data);
+       location.reload();
+         },
+         error => {
+       console.log(error);
+       }
+    );
+     },
+       error => {
+         console.log(error);
+       }
+  );
+   });
+
+ }
+
+ public openDelegate() : void {
+  const dialogRef = this.dialog.open( DelegateComponent, {
    height: '450px',
    width: '600px',
    disableClose : true,

@@ -56,7 +56,7 @@
           <p class="nombre">Starbucks</p>
           
             <mat-toolbar class="conten" *ngIf="options"> 
-              <span class="subtitle gray"><span>{{numStore}}</span> Stores selected</span>   <span class="margeTitle blue" (click)="openChanges()">	<mat-icon class="blue icon-margin">autorenew</mat-icon>CHANGES STATUS</span>    <span class="margeTitle blue"><mat-icon class="icon-margin">compare_arrows</mat-icon>DELEGATE</span>    <span class="margeTitle red"><mat-icon class="icon-margin">delete</mat-icon>DELETE SELECTION</span>
+              <span class="subtitle gray"><span>{{numStore}}</span> Stores selected</span>   <span class="margeTitle blue" (click)="openChanges()">	<mat-icon class="blue icon-margin">autorenew</mat-icon>CHANGES STATUS</span>    <span class="margeTitle blue" (click)="openDelegate()"><mat-icon class="icon-margin">compare_arrows</mat-icon>DELEGATE</span>    <span class="margeTitle red" (click)="deleteCheck()"><mat-icon class="icon-margin" >delete</mat-icon>DELETE SELECTION</span>
             </mat-toolbar>
           
 

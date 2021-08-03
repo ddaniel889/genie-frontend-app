@@ -2,7 +2,7 @@
 
     <div style="width: 100%;">
         <mat-toolbar class="conten">
-              <span mat-dialog-title class="title"> Changes status  </span> 
+              <span mat-dialog-title class="title"> Delegate  </span> 
              <span class="example-spacer"></span>
              <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
            </mat-toolbar>
@@ -30,12 +30,12 @@
           <tr>
             <td>
               <mat-form-field>
-                <mat-label>Select status</mat-label>
+                <mat-label>Select delegate</mat-label>
                 <mat-select  class="select-company" formControlName="status" name="status" placeholder="select" >
                     <!--option *ngFor="let sta of status" [ngValue]="sta.value">{{sta.value}}</option-->
-                     <option value="active">Active</option>
-                     <option value="paused">Paused</option>
-                     <option value="draft">Draft</option>
+                     <option value="active">Sarah Smith</option>
+                     <option value="paused">Emnanuel Stevenson</option>
+                     <option value="draft">Richard Ferguson</option>
               </mat-select>
             </mat-form-field>
             </td>
@@ -46,9 +46,7 @@
             <td>
             </td>
             <td>
-              <agm-map [latitude]="lat" [longitude]="lng">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-              </agm-map>
+            
             </td>
           </tr>
           </table>     
@@ -62,3 +60,4 @@
           CONFIRM
          </button>   
       </mat-dialog-actions>
+
