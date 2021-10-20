@@ -33,9 +33,40 @@
     color: #ed5c5c;
   }
 
+  button.cancelExport{
+    border: 2px solid #084eab;
+    margin-right: 350px !important;
+    height: 39px !important;
+    width: 170px !important;
+   }
+  
+   .cancelTitleExport{
+    color: #084eab;
+  }
+
+  .spinner{
+    margin-top: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  
+  .print{
+    margin-top: 7px !important;  
+    margin-right: 10px !important;
+    color: #084eab !important;
+    margin-bottom: 10px !important;
+  }
+  mat-icon.print{
+    height: 20px !important;
+  }
+
   
   .option{
     margin-left:30px !important;
+  }
+
+  a.cancelTitleExport{
+    text-decoration: none !important;
   }
 
   .cancelTitle{
@@ -67,6 +98,10 @@
   }
   .edit{
     color: #084eab;
+  }
+
+  .manage{
+    color: #870581 !important;
   }
   .nombre{
     font-size: 21px;

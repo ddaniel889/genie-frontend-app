@@ -11,17 +11,21 @@
           <table>
            <tr>
              <td>
-            <p>This changes affects the following selection:</p>
+            <p *ngIf="admin"><span class="store">Store manager </span></p> 
+            <p *ngIf="admin===false"><span class="store">No results for admin </span></p> 
              </td>
              <td>
             </td>
            </tr>
            <tr>
             <td>
-                <ul class="list">
-                    <li> Centro 4 </li>
-                    <li> Las Condes Shooping </li>
-                    <li> Av San Martin 3121 </li>
+                <ul class="list" *ngIf="admin">
+                    <li> {{name}} </li>
+                    <li> {{email}} </li>
+                    <li> {{role}} </li>
+                    <li> <span class="label">Store:</span>{{storeName}} </li>
+                    <li> <span class="label">Company:</span> {{companyName}} </li>
+                    <li> {{countryName}} </li>
                 </ul>
             </td>
             <td>
@@ -29,15 +33,7 @@
           </tr>
           <tr>
             <td>
-              <mat-form-field>
-                <mat-label>Select delegate</mat-label>
-                <mat-select  class="select-company" formControlName="status" name="status" placeholder="select" >
-                    <!--option *ngFor="let sta of status" [ngValue]="sta.value">{{sta.value}}</option-->
-                     <option value="active">Sarah Smith</option>
-                     <option value="paused">Emnanuel Stevenson</option>
-                     <option value="draft">Richard Ferguson</option>
-              </mat-select>
-            </mat-form-field>
+         
             </td>
             <td>
             </td>
@@ -52,8 +48,8 @@
           </table>     
           <br />
       </mat-dialog-content>
-      <mat-dialog-actions align="end">  
-          <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">CANCEL</span></button> 
+      <mat-dialog-actions   align="end" >  
+         
           <button mat-raised-button
           matTooltip="Info about the action" color="primary"
           aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">

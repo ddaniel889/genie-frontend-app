@@ -31,6 +31,10 @@ export class AddStoreComponent implements OnInit {
   public imageError:string;
   public isImageSaved:boolean;
   public jwToken:string;
+  public imageData:string;
+  public imageMime:string;
+  public imageSize:string;
+  public imageName:string;
 
 
 
@@ -184,32 +188,52 @@ filtered :any;
     let firstObj:any = (results.length > 0) ? results[0] : null;
     let storeToken = firstObj.token; 
     console.log(firstObj);
-    const objectImage : any = {
+    this.imageData = firstObj.image.data;
+    console.log(this.imageData);
+    this.imageMime = firstObj.image.mime;
+    console.log(this.imageMime);
+    this.imageName = firstObj.image.name;
+    console.log(this.imageName);
+    this.imageSize = firstObj.image.size;
+    /*const objectImage : any = {
         data: this.cardImageBase64,
         mime: this.mime,
         name: this.name,
         size: this.size
     }
-    console.log(objectImage);
+    console.log(objectImage);*/
    
     const objectStore: any = {
       active: true,
       address: this.form.value.address,
-      image: objectImage,
       company: {
         country: {
           code: "CL",
           currency: this.form.value.currency,
           name: this.form.value.country
         },
+        image: {
+          data: this.imageData,
+          mime: this.imageMime,
+          name: this.imageName,
+          size: this.imageSize
+        },
         name: this.form.value.company, 
         token: storeToken //token de compania elegida
       },
-      latitude: -35.675147,
-      longitude: -71.6653,
+      image: {
+        data: this.cardImageBase64,
+        mime: this.mime,
+        name: this.name,
+        size: this.size
+      },
+      latitude: this.form.value.latitude,
+      longitude: this.form.value.longitude,
       name: this.form.value.store,
       token: id
     }
+    console.log('Objeto de store');
+    console.log(objectStore);
     this.dialogRef.close(objectStore);
 }
 

@@ -22,15 +22,19 @@ export class CompanyComponent implements OnInit,AfterViewInit {
   public displayedColumns = [];
   public jwToken : string;
   dataSource: MatTableDataSource<any>  = new MatTableDataSource();
-  public data:string;
+  //public data:string;
   public mime:string;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public companyI = [];
   public selection = new SelectionModel<any>(true, []);
+  public data:string;
+  public spinner:boolean;
+  public table:boolean = false;
 
   constructor(private company:CompanyService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.spinner = true;
     this.displayedColumns = ['check','token','photo','Name', 'Code','Country','Currency','id'];
     this.getToken();
   }
@@ -73,7 +77,7 @@ export class CompanyComponent implements OnInit,AfterViewInit {
       console.log(data);
       this.jwToken = data.jwt;
       this.loadCompany('/backend/v1/companies/',this.jwToken);
-     
+      this.exportCompany('/backend/v1/companies/export',this.jwToken);
      }
    );
   }
@@ -85,20 +89,26 @@ export class CompanyComponent implements OnInit,AfterViewInit {
     this.company.get(url,token)
     .subscribe( data => {
       console.log(data);
+      this.spinner = false;
+      this.table = true;
       this.companyI = data;
+      console.log('valor datos companyI');
+      console.log(this.companyI);
       this.dataSource.data = data;
-      console.log('token image');
-      let tokenImage = data[3].token;
-      console.log(tokenImage);
-      this.company.get(`/backend/v1/companies/${tokenImage}/image`,this.jwToken)
-      .subscribe( data => {
-        console.log(data);
-        console.log('datos de la imagen para posicion 4');
-        this.data = data.data;
-        this.mime = data.mime;
-      
-      }
-      );
+    }
+    );
+  },4000);
+}
+
+private exportCompany(url:string, token: string) : void{
+  const timeout = setTimeout(() => {
+    clearTimeout(timeout) 
+    this.company.get(url,token)
+    .subscribe( data => {
+      console.log(data);
+      this.data = data.data;
+      console.log('datos excel');
+      console.log(this.data);
     }
     );
   },4000);
@@ -107,6 +117,10 @@ export class CompanyComponent implements OnInit,AfterViewInit {
 public onChange(e) {
   console.log(e.checked);
 }
+
+public exportData(): void {
+  console.log('hello');
+ }
 
   public openDialog() : void {
  
@@ -138,6 +152,7 @@ public onChange(e) {
         console.log('imagen insertada')
         console.log(data);      
         location.reload();
+        
           },
           error => {
             console.log(error);
@@ -152,7 +167,7 @@ public onChange(e) {
  
   }
 
-  public editCategory(a) : void{
+  public editCategory(a:string) : void{
     let token = a;
     console.log(token);
     const dialogRef = this.dialog.open( EditCompanyComponent, {
@@ -166,9 +181,16 @@ public onChange(e) {
      dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
         console.log(JSON.stringify(result));
-        this.ngOnInit();
-      });
-  
+        this.company.post('/backend/v1/companies/save', result,this.jwToken).subscribe((data)=> {
+          console.log(data);
+          //this.ngOnInit();
+          location.reload();
+            },
+            error => {
+              console.log(error);
+          }
+       );
+    });
   }
 
 
@@ -182,7 +204,8 @@ public onChange(e) {
   public delete(token:string) : void {
    this.company.delete(`/backend/v1/companies/${token}/delete`,this.jwToken).subscribe(data => {
      console.log(data);
-     this.ngOnInit();
+     //this.ngOnInit();
+     location.reload();
   
       },
       error => {

@@ -12,34 +12,36 @@
     background-color: #084eab;
   }
 
-  .delete{
-    color: #ed5c5c;
-  }
-
   .searchbox{
     margin-left: 10px !important;
   }
-
+  
   input.form-control.buscar{
-    height: 32px !important;
+    height: 34px !important;
     width:  280px !important;
     border-radius: 5px !important;
     border: 0.5px solid green;
     
   }
+  
+  ::placeholder { 
+    margin-left: 15px !important;
+    color:black !important;
+  }
 
-  button.cancel{
+  .delete{
+    color: #ed5c5c;
+  }
+
+  button.cancelExport{
     border: 2px solid #084eab;
     margin-right: 350px !important;
     height: 39px !important;
     width: 170px !important;
    }
-
+  
    .cancelTitleExport{
-    color: #084eab !important;
-  }
-  a.cancelTitleExport{
-    text-decoration: none !important;
+    color: #084eab;
   }
 
   .spinner{
@@ -47,7 +49,7 @@
     display: flex !important;
     justify-content: center !important;
   }
-
+  
   .print{
     margin-top: 7px !important;  
     margin-right: 10px !important;
@@ -58,10 +60,37 @@
     height: 20px !important;
   }
 
-  ::placeholder { 
-    margin-left: 15px !important;
-    color:black !important;
+  
+  .option{
+    margin-left:30px !important;
   }
+
+  a.cancelTitleExport{
+    text-decoration: none !important;
+  }
+
+  .cancelTitle{
+    color: #ed5c5c;
+    font-size: 12px;
+  }
+
+  button:hover{
+    color: black;
+    font-weight:500;
+  }
+
+  .cancelTitleLast{
+    color: #ed5c5c;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 50px !important;
+  }
+  
+  button.cancel{
+    border: 1px solid #ed5c5c;
+    margin-right: 10px;
+    margin-left: 20px !important;
+   }
 
   .image-class{
     width:110px !important;
@@ -69,6 +98,10 @@
   }
   .edit{
     color: #084eab;
+  }
+
+  .manage{
+    color: #870581 !important;
   }
   .nombre{
     font-size: 21px;
@@ -94,6 +127,14 @@
 .ico{
   color:#e76f58;
   padding-left: 20px;
+}
+
+.icoFilter{
+  color:#e76f58;
+}
+
+div.mat-menu-panel{
+  width: 350px !important;
 }
 
 
@@ -136,6 +177,37 @@ mat-toolbar.conten {
   margin-bottom: 50px;
 }
 
+.subtitle{
+  font-size: 14px !important;
+  margin-left: 25px !important;
+}
+
+.margeTitle{
+  font-size: 14px !important;
+  margin-left: 35px !important;
+}
+
+.red{
+  color:#e76f58;
+}
+
+.icon-margin{
+  margin-right: 10px !important;
+}
+
+.blue{
+  color:#084eab;
+}
+.location{
+  color:gray;
+}
+
+.gray{
+  color:gray;
+}
+
+
+
 table {
   width: 100%;
 }
@@ -144,6 +216,16 @@ table {
 .title {
   color:#e76f58;
   margin-left: 10px !important;
+}
+
+.store {
+  color:#084eab;
+  text-decoration: underline;
+  font-weight: bold !important;
+}
+
+.status {
+  color:#084eab;
 }
 
 mat-toolbar {
@@ -155,6 +237,3 @@ th.actions{
   padding-left: 15px !important;
 
 }
-
-
-

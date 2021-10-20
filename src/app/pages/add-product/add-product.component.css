@@ -78,28 +78,7 @@
     flex: 1 1 auto;
   }
 
-  .label {
-    margin-right: 3px !important;
-  }
-
-  .mat-bottom{
-    margin-top: 190px !important;
-  }
-
-
   agm-map {
     height: 200px !important;
     width: 370px !important;
-  }
-
-
-
-  .store {
-    color: #870581 !important;
-    font-weight: bold;
-  }
-
-  li {
-    margin-top: 15px !important;
-    margin-bottom: 15px !important;
   }

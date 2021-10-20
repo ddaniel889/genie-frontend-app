@@ -99,7 +99,7 @@ export class StoreDetailComponent implements OnInit {
       //clearTimeout(timeout) 
         let tokenStore = token;
         console.log(tokenStore);
-        this.store.get(`/backend/v1/stores/${tokenStore}`,jwToken)
+        this.store.get(`/backend/v1/stores/${tokenStore}/company`,jwToken)
         .subscribe( data => {
           console.log('tienda devuelta asociada a compañías');
           console.log(data);

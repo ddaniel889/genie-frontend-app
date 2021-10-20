@@ -20,6 +20,10 @@ export class EditCompanyComponent implements OnInit {
   public form: FormGroup;
   public jwToken : string;
   public tokenCompany:string;
+  public dataImg:string;
+  public mime:string;
+  public size:string;
+  public nameImg:string;
 
   constructor(
     private fb: FormBuilder,
@@ -71,25 +75,16 @@ export class EditCompanyComponent implements OnInit {
         .subscribe( data => {
           console.log('company individual devuelta');
           console.log(data);
-          let catToken:any = data.token;
-          let storeSelected = catToken//this.storToken;
-          let results =  catToken.filter(function (index:any) { return index.token == storeSelected; });
-          let firstObj:any = (results.length > 0) ? results[0] : null;
+          this.dataImg = data.image.data;
+          this.mime = data.image.mime;
+          this.size = data.image.size;
+          this.nameImg = data.image.name;
           this.form.setValue({
             name: data.name,
-            country: data.country,
-            code: data.code,
-            currency: data.currency
+            country: data.country.name,
+            code: data.country.code,
+            currency: data.country.currency
           });
-          /*this.store.get(`/backend/v1/stores/${this.storToken}/image`,this.jwToken)
-          .subscribe( data => {
-            console.log('imagen devuelta');
-            console.log(data);
-            this.data = data.data;
-            this.mime = data.mime;
-          }
-          );*/
-         
         });
    
     //},4000);
@@ -102,10 +97,16 @@ export class EditCompanyComponent implements OnInit {
         currency: this.form.value.currency,
         name: this.form.value.country
       },
+      image: {
+        data: this.dataImg,
+        mime: this.mime,
+        name: this.nameImg,
+        size: this.size
+      },
       name: this.form.value.name,
       token: this.tokenCompany
-    
    }
+    console.log(objectCompany);
     this.dialogRef.close(objectCompany);
   }
 

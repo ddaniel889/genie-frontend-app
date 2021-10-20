@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { FormGroup,FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import {  ManagerService } from './../../services/manager.service';
 import {  StoreService } from './../../services/store.service';
 import {  AuthenticationService } from './../../services/authentication.service';
 import { APP,TOKEN } from './../../services/constants';
@@ -14,30 +15,24 @@ import { APP,TOKEN } from './../../services/constants';
   styleUrls: ['./delegate.component.css']
 })
 export class DelegateComponent implements OnInit {
-  public lat =  -35.675147;
-  public lng = -71.542969;
-  public zoom = 9;
   Insert: any;
-  public name: string;
   public description: string;
-  public image2: any;
-  public error:boolean;
-  public mime:string;
-  public size:string;
-  public cardImageBase64: string;
-  public photo: string;
-  public files:string  []  =  [];
   public companyI:string  []  =  [];
   form: FormGroup;
-  public imageError:string;
-  public isImageSaved:boolean;
   public jwToken:string;
+  public storToken:string;
+  public name:string; 
+  public email:string; 
+  public role:string; 
+  public companyName:string; 
+  public storeName:string;  
+  public countryName:string; 
+  public admin:boolean = false; 
 
-  constructor(private fb: FormBuilder,private store:StoreService,private authentication:  AuthenticationService,
+  constructor(private fb: FormBuilder,private store:StoreService,private authentication:  AuthenticationService, private manager:ManagerService,
     private dialogRef: MatDialogRef<DelegateComponent>,
-    @Inject(MAT_DIALOG_DATA) data) { 
+    @Inject(MAT_DIALOG_DATA)  public data: any) { 
       this.name = data.name;
-      this.photo = data.photo;
       this.description = data.description;
     }
 
@@ -45,6 +40,7 @@ export class DelegateComponent implements OnInit {
     this.form = this.fb.group({
       status: [''],
   });
+  this.storToken = this.data.token;
    this.getToken();
   }
 
@@ -56,22 +52,29 @@ export class DelegateComponent implements OnInit {
     this.authentication.postAuthentication('/backend/v1/authentication/login',object).subscribe( data => {
       console.log(data);
       this.jwToken = data.jwt;
-      this.loadCompany('/backend/v1/companies/',this.jwToken);
+      this.loadAdmin(this.storToken,this.jwToken);
      }
    );
   }
 
-  private loadCompany(url:string, token: string) : void{
-    const timeout = setTimeout(() => {
-      clearTimeout(timeout) 
-      this.store.get(url,token)
+  private loadAdmin(tokenStore:string, token: string) : void{
+   /* const timeout = setTimeout(() => {
+      clearTimeout(timeout) */
+      this.manager.get(`/backend/v1/managers/${tokenStore}/store`,token) 
       .subscribe( data => {
         console.log(data);
+        this.admin = data !==undefined ?true: false
         this.companyI = data;
-        console.log('datos de compañias')
+        console.log('datos de AaDMIN')
         console.log(this.companyI);
+        this.name = data.admin.name;
+        this.email = data.admin.email;
+        this.role =  data.admin.role;
+        this.companyName = data.admin.company.name;
+        this.storeName = data.store.name ;
+        this.countryName = data.admin.company.country.name;
       });
-    },4000);
+   // },4000);
   }
 
   public close() : void  {

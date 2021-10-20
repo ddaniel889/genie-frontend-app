@@ -1,0 +1,49 @@
+
+
+.add{
+    display: flex;
+  }
+  
+  .title {
+      color:#084eab;
+  
+  }
+  mat-icon.add{
+    margin-bottom: 15px !important;
+  
+  }
+  mat-toolbar{
+    background-color: #fff;
+    padding-left: 0;
+   }
+  
+  mat-form-field{
+    width: 432px !important;
+  }
+  .cancelTitle{
+    color: #084eab;
+  }
+  
+  button.cancel{
+    border: 1px solid #084eab;
+    margin-right: 10px;
+   }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .title-label {
+    color:#BABABA !important;
+  }
+  .name{
+    margin-left: 15px !important;
+  }
+
+  .btn{
+    color:#084eab !important;
+   /* margin-left: 310px !important;*/
+  }
+  .error{
+    color:#E8446C !important;
+  }

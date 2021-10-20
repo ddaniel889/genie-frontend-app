@@ -12,26 +12,88 @@
     background-color: #084eab;
   }
 
-  th.myCell{
-    width: 155px !important;
-    height: 56px !important;
-  }
   .delete{
     color: #ed5c5c;
   }
+
+  .searchbox{
+    margin-left: 10px !important;
+  }
+
+  input.form-control.buscar{
+    height: 32px !important;
+    width:  280px !important;
+    border-radius: 5px !important;
+    border: 0.5px solid green;
+    
+  }
+
+  button.cancel{
+    border: 2px solid #084eab;
+    margin-right: 350px !important;
+    height: 39px !important;
+    width: 170px !important;
+   }
+
+   .cancelTitleExport{
+    color: #084eab !important;
+  }
+  a.cancelTitleExport{
+    text-decoration: none !important;
+  }
+
+  .spinner{
+    margin-top: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .print{
+    margin-top: 7px !important;  
+    margin-right: 10px !important;
+    color: #084eab !important;
+    margin-bottom: 10px !important;
+  }
+  mat-icon.print{
+    height: 20px !important;
+  }
+
+  ::placeholder { 
+    margin-left: 15px !important;
+    color:black !important;
+  }
+
+  .image-class{
+    width:110px !important;
+    height: 80px !important;
+  }
   .edit{
     color: #084eab;
+    margin-left: 15px !important;
+    margin-bottom: 20px !important;
+    font-size: 15px;
+    font-weight: bold;
   }
+
+  .store{
+    color: #084eab;
+    margin-top: 30px !important;
+    padding-left: 15px !important;
+    margin-left: 15px !important;
+    margin-bottom: 40px !important;
+  }
+
+  .manager{
+    color: #084eab;
+    font-weight: bold;
+  }
+  
+  
   .nombre{
     font-size: 21px;
     color: #084eab;
     margin-left: 30px;
     font-weight: bold;
-  }
-
-  .managers {
-    color: #870581 !important;
-    
   }
   .categories{
     color: #870581 !important;
@@ -53,36 +115,6 @@
   padding-left: 20px;
 }
 
-button.cancel{
-  border: 2px solid #084eab;
-  margin-right: 350px !important;
-  height: 39px !important;
-  width: 170px !important;
- }
-
- .cancelTitleExport{
-  color: #084eab !important;
-}
-
-.spinner{
-  margin-top: 20px !important;
-  display: flex !important;
-  justify-content: center !important;
-}
-
-a.cancelTitleExport{
-  text-decoration: none !important;
-}
-
-.print{
-  margin-top: 7px !important;  
-  margin-right: 10px !important;
-  color: #084eab !important;
-  margin-bottom: 10px !important;
-}
-mat-icon.print{
-  height: 20px !important;
-}
 
 .anchor {
   padding-left: 20px;
@@ -138,26 +170,8 @@ mat-toolbar {
   background-color:#084eab !important;
 }
 
-.searchbox{
-  margin-left: 10px !important;
-}
-
-input.form-control.buscar{
-  height: 32px !important;
-  width:  280px !important;
-  border-radius: 5px !important;
-  border: 0.5px solid green;
-  
-}
-
-::placeholder { 
-  margin-left: 15px !important;
-  color:black !important;
-}
-
 th.actions{
   padding-left: 15px !important;
 
 }
-
 

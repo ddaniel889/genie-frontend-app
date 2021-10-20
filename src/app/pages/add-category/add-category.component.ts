@@ -123,7 +123,8 @@ export class AddCategoryComponent implements OnInit {
       image: objectImage,
       token: id
     }
-
+    console.log('objeto categoria');
+    console.log(object);
     this.dialogRef.close(object);
 }
 

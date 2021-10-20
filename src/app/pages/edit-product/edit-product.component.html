@@ -1,0 +1,94 @@
+
+
+    <div style="width: 100%;">
+        <mat-toolbar class="conten">
+              <span mat-dialog-title class="title">Edit product </span> 
+              <span>
+              <h6 class="status-title">Status</h6> 
+              <select  class="select-status"  name="status" placeholder="select" (change)="onOptionsSelected($event)">
+                <option *ngFor="let sta of status" [ngValue]="sta.value">{{sta.value}}</option>
+            </select>
+          </span>
+             <span class="example-spacer"></span>
+             <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
+           </mat-toolbar>
+      </div>
+        <mat-dialog-content [formGroup]="form">  
+          <table>
+
+            <tr>
+              <td>
+ 
+               <mat-form-field>
+                 <mat-label>Product name</mat-label>
+                 <input matInput formControlName="product">
+             </mat-form-field>
+              </td>
+              <td>
+               <mat-form-field>
+                 <mat-label>Select category</mat-label>
+                 <mat-select  class="select-company" formControlName="category" name="category" placeholder="select" >
+                   <!--mat-option *ngFor="let cat of categoryI" [value]="cat.name">{{cat.name}}</mat-option-->
+                   <mat-option  value="Tecnología">Tecnología</mat-option>
+                   <mat-option  value="Cosmética">Cosmética</mat-option>
+                   <mat-option  value="Línea blanca">Línea blanca</mat-option>
+                   <mat-option  value="Línea marrón ">Línea marrón</mat-option>
+               </mat-select>
+             </mat-form-field>
+             </td>
+ 
+            </tr>
+ 
+            <tr>
+ 
+             <td>
+               <mat-label><span class="title-label">Photo</span></mat-label>
+               <span class="name">{{name}} </span>
+               <input #inputFoto hidden="true"  formControlName="photo" type="file" onclick="this.value=null" (change)="fileChangeEvent($event)" />
+               <button mat-flat-button  type="button" (click)="inputFoto.click()" class="btnFile"><span class="btn">UPLOAD </span></button> <br />
+                <span class="error" *ngIf="true">{{imageError}} </span>
+ 
+             </td>
+ 
+             <td>
+               <mat-form-field>
+                 <mat-label>Expires</mat-label>
+                 <input matInput type="date" formControlName="expires">
+             </mat-form-field>
+ 
+             </td>
+             
+           </tr>
+           <tr>
+             <td>
+              
+ 
+             <mat-form-field>
+               <mat-label>Description</mat-label>
+               <input matInput formControlName="description">
+           </mat-form-field>
+             </td>
+             <td>
+               <mat-form-field>
+                 <mat-label>Select store</mat-label>
+                 <mat-select  class="select-company" formControlName="store" name="store" placeholder="select" >
+                   <mat-option *ngFor="let sta of storeI" [value]="sta.name">{{sta.name}}</mat-option>
+               </mat-select>
+             </mat-form-field>
+ 
+             </td>
+ 
+           </tr>
+      
+           </table>     
+        
+           <br />
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">
+          <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">CANCEL</span></button> 
+          <button mat-raised-button
+          matTooltip="Info about the action" color="primary"
+          aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">
+          SAVE
+         </button>   
+      </mat-dialog-actions>

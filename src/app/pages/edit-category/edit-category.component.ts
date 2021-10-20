@@ -18,6 +18,10 @@ export class EditCategoryComponent implements OnInit {
   public form: FormGroup;
   public jwToken : string;
   public tokenCategory:string;
+  public dataImg:string;
+  public mime:string;
+  public size:string;
+  public nameImg:string;
 
   constructor(
     private fb: FormBuilder,
@@ -41,19 +45,8 @@ export class EditCategoryComponent implements OnInit {
     this.dialogRef.close();
   }
   
-  public save() : void  {
-    const objectCategory: Category = {  
-        description: this.form.value.description,
-        name: this.form.value.name,
-        token: this.tokenCategory
-      
-    }
 
-    this.dialogRef.close(objectCategory);
-    
-  }
-
-
+ 
 public getToken() : void {
   const object : any = {
     app: APP.DATA,
@@ -77,26 +70,35 @@ private categoryDetail(token: string, jwToken:string) : void{
       .subscribe( data => {
         console.log('categoria individual devuelta');
         console.log(data);
-        let catToken:any = data.token;
-        let storeSelected = catToken//this.storToken;
-        let results =  catToken.filter(function (index:any) { return index.token == storeSelected; });
-        let firstObj:any = (results.length > 0) ? results[0] : null;
+        this.dataImg = data.image.data;
+        this.mime = data.image.mime;
+        this.size = data.image.size;
+        this.nameImg = data.image.name;
         this.form.setValue({
           name: data.name,
           description: data.description,
         });
-        /*this.store.get(`/backend/v1/stores/${this.storToken}/image`,this.jwToken)
-        .subscribe( data => {
-          console.log('imagen devuelta');
-          console.log(data);
-          this.data = data.data;
-          this.mime = data.mime;
-        }
-        );*/
        
       });
  
   //},4000);
   }
+
+  public save() : void  {
+    const objectCategory: any = {
+      description:  this.form.value.description,
+      image: {
+        data: this.dataImg,
+        mime: this.mime,
+        name: this.size,
+        size: this.size
+      },
+      name:  this.form.value.name,
+      token: this.tokenCategory
+    }
+    console.log(objectCategory);
+    this.dialogRef.close(objectCategory);
+  }
+
 
 }

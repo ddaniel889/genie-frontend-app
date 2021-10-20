@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './pages/category/category.component';
 import {  CategoryService } from './services/category.service';
+import {  ManagerService  } from './services/manager.service';
+import {  ProductsService  } from './services/products.service';
 import {  AuthenticationService } from './services/authentication.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
@@ -17,6 +19,7 @@ import { MatIconModule } from '@angular/material';
 import { MatMenuModule } from '@angular/material';
 import {MatDividerModule} from '@angular/material';
 import { MatTableModule } from '@angular/material/table'; 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule}   from '@angular/material/dialog';
@@ -32,6 +35,13 @@ import { AgmCoreModule } from '@agm/core';
 import { AddChangesComponent } from './pages/add-changes/add-changes.component';
 import { StoreDetailComponent } from './pages/store-detail/store-detail.component';
 import { DelegateComponent } from './pages/delegate/delegate.component';
+import { SafePipe } from './pages/safe.pipe';
+import { ManagerComponent } from './pages/manager/manager.component';
+import { AddAdminComponent } from './pages/add-admin/add-admin.component';
+import { RolesComponent } from './pages/roles/roles.component';
+import { ProductComponent } from './pages/product/product.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
+import { EditProductComponent } from './pages/edit-product/edit-product.component';
 
 
 @NgModule({
@@ -48,10 +58,17 @@ import { DelegateComponent } from './pages/delegate/delegate.component';
     EditStoreComponent,
     AddChangesComponent,
     StoreDetailComponent,
-    DelegateComponent
+    DelegateComponent,
+    SafePipe,
+    ManagerComponent,
+    AddAdminComponent,
+    RolesComponent,
+    ProductComponent,
+    AddProductComponent,
+    EditProductComponent
   ],
   entryComponents: [ AddCategoryComponent, EditCategoryComponent,AddCompanyComponent,EditCompanyComponent, AddStoreComponent, 
-     EditStoreComponent,AddChangesComponent,StoreDetailComponent, DelegateComponent],
+     EditStoreComponent,AddChangesComponent,StoreDetailComponent, DelegateComponent,AddAdminComponent,RolesComponent,AddProductComponent,EditProductComponent],
   imports: [
     BrowserModule,
     AgmCoreModule.forRoot({
@@ -63,6 +80,7 @@ import { DelegateComponent } from './pages/delegate/delegate.component';
     MatButtonModule, MatCheckboxModule,
     MatSidenavModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
@@ -75,7 +93,7 @@ import { DelegateComponent } from './pages/delegate/delegate.component';
     ReactiveFormsModule,
     MatCheckboxModule,MatInputModule
   ],
-  providers: [ HttpClient,CategoryService, AuthenticationService],
+  providers: [ HttpClient,CategoryService, AuthenticationService, ManagerService,ProductsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

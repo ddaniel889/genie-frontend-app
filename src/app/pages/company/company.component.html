@@ -9,6 +9,8 @@
           <a mat-list-item routerLink="/category" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">list</mat-icon> <span class="title-anchor"> Categories</span> </a>
           <a mat-list-item routerLink="/company" class="list"><mat-icon aria-hidden="false" aria-label="" class="ico">business</mat-icon> <span class="title"> Companies</span> </a>
           <a mat-list-item routerLink="/store" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">store</mat-icon> <span class="title-anchor"> Stores</span> </a>
+          <a mat-list-item routerLink="/product" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">shopping_cart</mat-icon> <span class="title-anchor"> Products</span> </a>
+          <!--a mat-list-item routerLink="/manager" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">person</mat-icon> <span class="title-anchor"> Manager</span> </a-->
          </mat-nav-list> 
 
     </mat-sidenav>
@@ -36,14 +38,17 @@
             aria-label="Button that displays a tooltip in various positions" (click)="openDialog()">
             NEW COMPANY
            </button>
+
+           <button class="cancel" mat-button  ><mat-icon class="print">get_app</mat-icon><a class="cancelTitleExport" [href]="'data:application/octet-stream;base64,' + data | safe" download="company.xls">EXPORT EXCEL</a></button>
            
           </mat-toolbar>
           </p>
 
           <p class="nombre">Genie</p>
-      
-
-<div class="table">
+          <div class="spinner" *ngIf="spinner">
+            <mat-spinner></mat-spinner>
+           </div>
+<div class="table" *ngIf="table">
     <table mat-table [dataSource]="dataSource" >
 
 
@@ -65,8 +70,8 @@
       </ng-container>
 
       <ng-container matColumnDef="photo">
-        <th mat-header-cell *matHeaderCellDef> Photo </th>
-        <td mat-cell *matCellDef="let categoryI"> <img class="image-class" src="data:{{mime}};base64,{{data}}" alt=""> </td> 
+        <th mat-header-cell *matHeaderCellDef class="myCell"> Photo </th>
+        <td mat-cell *matCellDef="let companyI"> <img class="image-class" src="data:{{companyI.image.mime}};base64,{{companyI.image.data}}" alt=""> </td> 
       </ng-container>
   
   
@@ -97,6 +102,7 @@
         <td mat-cell *matCellDef="let companyI">
             <a mat-button (click)="delete(companyI.token)" class="delete">Delete</a>
             <a mat-button (click)="editCategory(companyI.token)" class="edit">Edit</a>
+            <a mat-button routerLink="/manager/{{companyI.token}}" class="managers">Managers</a> 
            
         </td>
     </ng-container>
@@ -106,9 +112,8 @@
     </table>
   
     <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[1, 5, 10,15]" showFirstLastButtons></mat-paginator>
-  </div>
-
 
 <mat-divider></mat-divider>
+</div>
     </mat-sidenav-content>
   </mat-sidenav-container>

@@ -23,18 +23,22 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   public displayedColumns = ['ID','Name', 'Description','id'];
   public jwToken : string;
   dataSource: MatTableDataSource<any>  = new MatTableDataSource();
-  public data:string;
+  //public data:string;
   public mime:string;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public categoryI = [];
   public tokenCategory = [];
   public imageRetrieve = [];
   public selection = new SelectionModel<any>(true, []);
+  public data:string;
+  public spinner:boolean;
+  public table:boolean = false;
   
 
   constructor(private category:CategoryService,private authentication:  AuthenticationService, public router: Router,public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.spinner = true;
     this.displayedColumns = ['check','token','photo','Name', 'Description','id'];
     this.getToken();
   }
@@ -75,7 +79,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.jwToken = data.jwt;
       this.loadCategories('/backend/v1/categories/',this.jwToken);
-     
+      this.exportCategory('/backend/v1/categories/export',this.jwToken);
      }
    );
   }
@@ -86,49 +90,37 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     clearTimeout(timeout) 
     this.category.get(url,token)
     .subscribe( data => {
+      console.log('respuesta service category');
       console.log(data);
+      this.spinner = false;
+      this.table = true;
       this.categoryI = data;
+      console.log('vector category');
+      console.log(this.categoryI);
+      //let mime = data.image.mime;
+     // console.log(mime);
+     // let data1 = data.image.data;
+     // console.log(data1);
+     let name = data.name;
+     console.log(name);
       this.dataSource.data = data;
-      for(let item in this.categoryI){ 
-        console.log(this.categoryI[item].token);
-        this.tokenCategory.push(this.categoryI[item].token);
-       }
-      console.log('token image');
-      let tokenImage = data[7].token;
-      console.log(tokenImage);
-      this.category.get(`/backend/v1/categories/${tokenImage}/image`,this.jwToken)
-      .subscribe( data => {
-        console.log(data);
-        console.log('datos de la imagen para posicion 4');
-        this.data = data.data;
-        this.mime = data.mime;
-      
-      }
-      );
-     /* for (let i = 0; i <  this.tokenCategory.length; i++){
-        console.log('categoria individual');
-        console.log(this.tokenCategory[i]);
-        this.category.get(`/backend/v1/categories/${this.tokenCategory[i]}/image`,this.jwToken)
-        .subscribe( data => {
-          console.log(data);
-          this.imageRetrieve.push(data);
-          console.log('imagenes devueltas');
-          console.log(this.imageRetrieve);
-          for(let item in this.imageRetrieve){ 
-            console.log('posicion');
-            console.log(this.imageRetrieve[item]);
-            console.log(this.imageRetrieve[item].data);
-            console.log(this.imageRetrieve[item].mime);
-           }
-            
-        }
-        ); 
-
-      }*/
-      //console.log('imagenes totales');
-      //console.log(this.imageRetrieve);
+     
     }
     
+    );
+  },4000);
+}
+
+private exportCategory(url:string, token: string) : void{
+  const timeout = setTimeout(() => {
+    clearTimeout(timeout) 
+    this.category.get(url,token)
+    .subscribe( data => {
+      console.log(data);
+      this.data = data.data;
+      console.log('datos excel');
+      console.log(this.data);
+    }
     );
   },4000);
 }
@@ -161,7 +153,7 @@ public onChange(e,index) {
       console.log('token obtenido')
       this.category.post(`/backend/v1/categories/image/${tokenCategory}/save`, imageObject,this.jwToken).subscribe((data)=> {
         console.log(data);
-        location.reload();
+        //location.reload();
           },
           error => {
         console.log(error);
@@ -194,15 +186,8 @@ public onChange(e,index) {
         this.category.post('/backend/v1/categories/save', result,this.jwToken).subscribe((data)=> {
           console.log('objeto devuelto en update category')
           console.log(data);
-          let tokenRetrieve = data.token;
-         /* this.store.post(`/backend/v1/stores/image/${tokenRetrieve}/save`, imageObject,this.jwToken).subscribe((data)=> {
-            console.log(data);
-            location.reload();
-              },
-              error => {
-            console.log(error);
-            }
-         );*/
+          //this.ngOnInit();
+          location.reload();
           },
             error => {
               console.log(error);
@@ -219,10 +204,14 @@ public onChange(e,index) {
     }
   }
 
+  public exportData(): void {
+   console.log('hello');
+  }
+
   public delete(token:string) : void {
    this.category.delete(`/backend/v1/categories/${token}/delete`,this.jwToken).subscribe(data => {
      console.log(data);
-     this.ngOnInit();
+     location.reload();
   
       },
       error => {

@@ -97,7 +97,7 @@ filtered :any;
     this.authentication.postAuthentication('/backend/v1/authentication/login',object).subscribe( data => {
       console.log(data);
       this.jwToken = data.jwt;
-      this.editStore(this.tokenStore,this.jwToken);
+      this.editStore( this.storToken,this.jwToken);
      }
    );
   }
@@ -111,23 +111,17 @@ filtered :any;
         .subscribe( data => {
           console.log('tiendas devueltas asociadas a compañías');
           console.log(data);
-          let Stores:any = data;
-          let storeSelected = this.storToken;
-          let results =  Stores.filter(function (index:any) { return index.token == storeSelected; });
-          let firstObj:any = (results.length > 0) ? results[0] : null;
-          let storeToken = firstObj.token; 
-          let status = firstObj.active;
-          let statusStore = (status == true) ? 'Active' : 'Paused';
+          let statusStore = (data.active == true) ? 'Active' : 'Paused';
           this.data = data.data;
           this.form.setValue({
-            store: firstObj.name,
-            country: firstObj.company.country.name,
+            store: data.name,
+            country: data.company.country.name,
             photo: '',
-            currency: firstObj.company.country.currency,
-            latitude: firstObj.latitude,
-            longitude: firstObj.longitude,
-            company: firstObj.company.name,
-            address: firstObj.address
+            currency: data.company.country.currency,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            company: data.company.name,
+            address: data.address
           });
         });
    

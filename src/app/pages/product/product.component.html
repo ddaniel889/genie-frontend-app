@@ -8,8 +8,8 @@
         <mat-nav-list >
           <a mat-list-item routerLink="/category" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">list</mat-icon> <span class="title-anchor"> Categories</span> </a>
           <a mat-list-item routerLink="/company" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">business</mat-icon> <span class="title-anchor"> Companies</span> </a>
-          <a mat-list-item routerLink="/store" class="list"><mat-icon aria-hidden="false" aria-label="" class="ico">store</mat-icon> <span class="title"> Stores</span> </a>
-          <a mat-list-item routerLink="/product" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">shopping_cart</mat-icon> <span class="title-anchor"> Products</span> </a>
+          <a mat-list-item routerLink="/store" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">store</mat-icon> <span class="title-anchor"> Stores</span> </a>
+          <a mat-list-item routerLink="/product" class="list"><mat-icon aria-hidden="false" aria-label="" class="ico">shopping_cart</mat-icon> <span class="title"> Products</span> </a>
           <!--a mat-list-item routerLink="/manager" class="list"><mat-icon aria-hidden="false" aria-label="" class="anchor">person</mat-icon> <span class="title-anchor"> Manager</span> </a-->
         </mat-nav-list> 
 
@@ -18,14 +18,14 @@
 
         <p> 
             <mat-toolbar class="conten">
-              <span class="categories">Stores</span>
+              <span class="categories">Products</span>
             </mat-toolbar>
         </p>
           <p>
             <mat-toolbar class="conten">
               <form class="form-inline searchbox">
                 <div class="input-group">
-                  <input type="text" class="form-control buscar" placeholder=" Search ID, store name"  (keyup)="applyFilter($event.target.value)">
+                  <input type="text" class="form-control buscar" placeholder=" Search ID, product name"  (keyup)="applyFilter($event.target.value)">
                 </div>    
               </form>
              <!--button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
@@ -33,7 +33,7 @@
             </button>
             <span>My App</span-->
             <!--button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">FILTERS</span></button-->   
-            <button class="cancel" mat-button [matMenuTriggerFor]="menu"> <mat-icon class="icoFilter">filter_list</mat-icon><span class="cancelTitle"> FILTERS</span></button> 
+            <!--button class="cancel" mat-button [matMenuTriggerFor]="menu"> <mat-icon class="icoFilter">filter_list</mat-icon><span class="cancelTitle"> FILTERS</span></button> 
             <mat-menu class="matMenu" #menu="matMenu">
             <button class="matbutton" mat-menu-item>Show image issues (12)</button>
             <button class="matbutton" mat-menu-item>Show location issues (1)</button>
@@ -43,37 +43,37 @@
             <span class="matbutton option" mat-menu-item>Draft</span>
             <button class="matbutton" mat-menu-item>Missed information (0)</button>
             <span class="cancelTitleLast">CLEAR FILTERS</span>
-            </mat-menu>
+            </mat-menu-->
             <span class="example-spacer"></span>
             <button mat-raised-button class="category"
             matTooltip="Info about the action" color="primary"
     
             aria-label="Button that displays a tooltip in various positions" (click)="openDialog()">
-            NEW STORE
+            NEW PRODUCT
            </button>
 
-           <button class="cancelExport" mat-button ><mat-icon class="print">get_app</mat-icon><a class="cancelTitleExport" [href]="'data:application/octet-stream;base64,' + data | safe" download="stores.xlsx">EXPORT EXCEL</a>  </button> 
+           <button class="cancelExport" mat-button ><mat-icon class="print">get_app</mat-icon><a class="cancelTitleExport" [href]="'data:application/octet-stream;base64,' + data | safe" download="products.xlsx">EXPORT EXCEL</a>  </button> 
            
           </mat-toolbar>
           </p>
 
-          <p class="nombre">Starbucks</p>
+          <p class="nombre">Teléfono Celular</p>
           <div class="spinner" *ngIf="spinner">
             <mat-spinner></mat-spinner>
            </div>
           
-            <mat-toolbar class="conten" *ngIf="options === true"> 
+            <!--mat-toolbar class="conten" *ngIf="options === true"> 
               <span class="subtitle gray"><span>{{numStore}}</span> Stores selected</span>   <span class="margeTitle blue" (click)="openChanges()">	<mat-icon class="blue icon-margin">autorenew</mat-icon>CHANGES STATUS</span>    <span class="margeTitle blue" (click)="openDelegate()"><mat-icon class="icon-margin">compare_arrows</mat-icon>DELEGATE</span>    <span class="margeTitle red" (click)="deleteCheck()"><mat-icon class="icon-margin" >delete</mat-icon>DELETE SELECTION</span>
-            </mat-toolbar>
+            </mat-toolbar-->
           
 
-<div class="table" *ngIf="table">
+   <div class="table" *ngIf="table">
     <table mat-table [dataSource]="dataSource" >
       <ng-container matColumnDef="check">
         <th mat-header-cell *matHeaderCellDef> <mat-checkbox class="example-margin"(change)="$event ? masterToggle() : null"
           [checked]="selection.hasValue() && isAllSelected()"
           [indeterminate]="selection.hasValue() && !isAllSelected()" ></mat-checkbox>  </th>
-        <td mat-cell *matCellDef="let storeI; let i=index">
+        <td mat-cell *matCellDef="let productsI; let i=index">
             <mat-checkbox class="example-margin" (click)="$event.stopPropagation()"
             (change)="$event ? selection.toggle(storeI) : null"
             [checked]="selection.isSelected(storeI)">
@@ -82,59 +82,64 @@
       </ng-container>
       <ng-container matColumnDef="token">
         <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let storeI"> {{storeI.token}} </td>
+        <td mat-cell *matCellDef="let productsI"> {{productsI.token}} </td>
       </ng-container>
 
       <ng-container matColumnDef="photo">
         <th mat-header-cell *matHeaderCellDef> Photo </th>
-        <td mat-cell *matCellDef="let storeI"> <img class="image-class" src="data:{{storeI.image.mime}};base64,{{storeI.image.data}}" alt=""> </td> 
+        <td mat-cell *matCellDef="let productsI"> <img class="image-class" src="data:{{productsI.image.mime}};base64,{{productsI.image.data}}" alt=""> </td> 
       </ng-container>
   
   
-      <ng-container matColumnDef="Store name">
-        <th mat-header-cell *matHeaderCellDef> Store name </th>
-        <td mat-cell *matCellDef="let storeI"> <span class="store">{{storeI.name}} </span> </td> 
+      <ng-container matColumnDef="Product name">
+        <th mat-header-cell *matHeaderCellDef> Product name </th>
+        <td mat-cell *matCellDef="let productsI"> <span class="store">{{productsI.name}} </span> </td> 
       </ng-container>
 
       <ng-container matColumnDef="Status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let storeI">
-        <span class="status" [ngSwitch]="storeI.active">
+        <td mat-cell *matCellDef="let productsI">
+        <span class="status" [ngSwitch]="productsI.active">
          <span  *ngSwitchCase="true" class="status">Active </span>
          <span  *ngSwitchCase="false" class="status">Paused </span>
         </span>  </td>
       </ng-container>
+
+      <ng-container matColumnDef="Store">
+        <th mat-header-cell *matHeaderCellDef> Store </th>
+        <td mat-cell *matCellDef="let productsI"> {{productsI.store.name}} </td>
+      </ng-container>
   
       <ng-container matColumnDef="Company">
         <th mat-header-cell *matHeaderCellDef> Company </th>
-        <td mat-cell *matCellDef="let storeI"> {{storeI.company.name}} </td>
+        <td mat-cell *matCellDef="let productsI"> {{productsI.store.company.name}} </td>
       </ng-container>
   
+  
+      <ng-container matColumnDef="Category">
+        <th mat-header-cell *matHeaderCellDef> Category </th>
+        <td mat-cell *matCellDef="let productsI"> {{productsI.category.name}} </td>
+      </ng-container>
 
-      <ng-container matColumnDef="Country">
-        <th mat-header-cell *matHeaderCellDef> Country </th>
-        <td mat-cell *matCellDef="let storeI"> {{storeI.company.country.name}} </td>
+      <ng-container matColumnDef="Description">
+        <th mat-header-cell *matHeaderCellDef>Description </th>
+        <td mat-cell *matCellDef="let productsI"> {{productsI.description}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Expires">
+        <th mat-header-cell *matHeaderCellDef> Expires </th>
+        <td mat-cell *matCellDef="let productsI"> {{productsI.expires}} </td>
       </ng-container>
   
-      <ng-container matColumnDef="Currency">
-        <th mat-header-cell *matHeaderCellDef> Currency </th>
-        <td mat-cell *matCellDef="let storeI"> {{storeI.company.country.currency}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="Address">
-        <th mat-header-cell *matHeaderCellDef> Address </th>
-        <td mat-cell *matCellDef="let storeI"> <span (click)="storeDetail(storeI.company.token,storeI.token)">  <mat-icon class="location"> location_on</mat-icon>  </span> </td> 
-      </ng-container>
-  
+      
     
       <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef class="actions"> Actions </th>
-        <td mat-cell *matCellDef="let storeI">
-            <a mat-button (click)="delete(storeI.token)" class="delete">Delete</a>
-            <a mat-button (click)="editStore(storeI.company.token,storeI.token)" class="edit">Edit</a>
-            <a mat-button (click)="addAdmin(storeI.token)" class="manage">Manage</a>
-            <a mat-button (click)="openDelegate(storeI.token)" class="edit">Admin</a>
-           
+        <td mat-cell *matCellDef="let productsI">
+            <a mat-button (click)="delete(productsI.token)" class="delete">Delete</a>
+            <a mat-button (click)="editProduct(productsI.token)" class="edit">Edit</a>
+          
         </td>
     </ng-container>
   
