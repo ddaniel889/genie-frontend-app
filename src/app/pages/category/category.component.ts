@@ -168,7 +168,7 @@ public onChange(e,index) {
  
   }
 
-  public editCategory(a) : void{
+  public editCategory(a:string) : void{
     let token = a;
     console.log(token);
     const dialogRef = this.dialog.open( EditCategoryComponent, {

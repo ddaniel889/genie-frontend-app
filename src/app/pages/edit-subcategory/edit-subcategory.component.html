@@ -1,0 +1,35 @@
+
+
+      <div style="width: 100%;">
+        <mat-toolbar class="conten">
+              <span mat-dialog-title class="title"> Edit sub-category  </span> 
+             <span class="example-spacer"></span>
+             <mat-icon aria-hidden="false" aria-label="add" class="add" (click)="close()">clear</mat-icon>     
+           </mat-toolbar>
+      </div>
+
+      <br />
+      <mat-dialog-content [formGroup]="form">       
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+        
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+
+        <button class="cancel" mat-button mat-dialog-close><span class="cancelTitle">Cancel</span></button> 
+        <button mat-raised-button
+        matTooltip="Info about the action" color="primary"
+
+        aria-label="Button that displays a tooltip in various positions" [mat-dialog-close]="Insert" (click)="save()">
+        Save
+       </button>
+     
+        
+    </mat-dialog-actions>

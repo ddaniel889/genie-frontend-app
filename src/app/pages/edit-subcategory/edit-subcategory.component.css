@@ -1,0 +1,33 @@
+.add{
+    display: flex;
+  }
+  
+  .title {
+      color:#084eab;
+  
+  }
+
+  mat-form-field{
+    width: 432px !important;
+  }
+ 
+  mat-toolbar{
+    background-color: #fff;
+    padding-left: 0 !important;
+   }
+
+   mat-icon.add{
+    margin-bottom: 20px !important;
+  
+  }
+  button.cancel{
+    border: 1px solid #084eab;
+    margin-right: 10px;
+   }
+
+   .example-spacer {
+    flex: 1 1 auto;
+  }
+  .cancelTitle{
+    color: #084eab;
+  }

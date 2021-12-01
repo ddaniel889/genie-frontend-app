@@ -1,7 +1,8 @@
 
-export class Category {
+export class SubCategory {
   token: string;
   name: string;
   description?: string;
-  image?: string;
+  image?: object;
+ 
 }

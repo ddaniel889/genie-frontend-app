@@ -42,6 +42,9 @@ import { RolesComponent } from './pages/roles/roles.component';
 import { ProductComponent } from './pages/product/product.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
+import { SubCategoryComponent } from './pages/sub-category/sub-category.component';
+import { AddSubcategoryComponent } from './pages/add-subcategory/add-subcategory.component';
+import { EditSubcategoryComponent } from './pages/edit-subcategory/edit-subcategory.component';
 
 
 @NgModule({
@@ -65,10 +68,13 @@ import { EditProductComponent } from './pages/edit-product/edit-product.componen
     RolesComponent,
     ProductComponent,
     AddProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    SubCategoryComponent,
+    AddSubcategoryComponent,
+    EditSubcategoryComponent
   ],
   entryComponents: [ AddCategoryComponent, EditCategoryComponent,AddCompanyComponent,EditCompanyComponent, AddStoreComponent, 
-     EditStoreComponent,AddChangesComponent,StoreDetailComponent, DelegateComponent,AddAdminComponent,RolesComponent,AddProductComponent,EditProductComponent],
+     EditStoreComponent,AddChangesComponent,StoreDetailComponent, DelegateComponent,AddAdminComponent,RolesComponent,AddProductComponent,EditProductComponent,AddSubcategoryComponent, EditSubcategoryComponent],
   imports: [
     BrowserModule,
     AgmCoreModule.forRoot({
